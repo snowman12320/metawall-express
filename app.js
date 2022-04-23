@@ -6,6 +6,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const postsRouter = require('./routes/posts');
 const { errorHandler } = require('./service/handler');
+const dotenv = require('dotenv');
+dotenv.config({path:'./.env'});
 
 const app = express();
 
