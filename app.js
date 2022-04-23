@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const cors = require('cors');
+// const cors = require('cors');
 const mongoose = require('mongoose');
 const postsRouter = require('./routes/posts');
 const { errorHandler } = require('./service/handler');
@@ -20,7 +20,7 @@ mongoose.connect(DB)
     .then(res=> console.log("連線資料成功"));
 
 // 載入設定檔
-// app.use(cors());
+// app.use(cors()); // 前端 vue axios 不需加 cors
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
