@@ -20,7 +20,7 @@ mongoose.connect(DB)
     .then(res=> console.log("連線資料成功"));
 
 // 載入設定檔
-app.use(cors());
+// app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
