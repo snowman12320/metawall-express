@@ -7,7 +7,26 @@ const mongoose = require('mongoose');
 const postsRouter = require('./routes/posts');
 const { errorHandler } = require('./service/handler');
 const dotenv = require('dotenv');
+const { CreateBucketCommand } = require("@aws-sdk/client-s3");
+const { s3 } = require("./libs/s3Client.js");
+
 dotenv.config({path:'./.env'});
+
+// Set the bucket parameters
+const bucketParams = {
+    Bucket: process.env.AWS_BUCKET
+};
+// Create the Amazon S3 bucket.
+const run = async () => {
+    try {
+        const data = await s3.send(new CreateBucketCommand(bucketParams));
+        console.log(data);
+        return data;
+    } catch (err) {
+        console.log("Error", err);
+    }
+};
+run();
 
 const app = express();
 
