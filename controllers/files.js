@@ -37,8 +37,10 @@ const files = {
             // successHandler(res, "新增成功", newFile);
             res.end();
         } catch(error) {
-            const errorStr = Object.values(error.errors).map(item => item.message).join('、');
-            errorHandler(res, errorStr);
+            console.log(error);
+            // const errorStr = Object.values(error.errors).map(item => item.message).join('、');
+            // errorHandler(res, errorStr);
+            res.end();
         }
     }
 }
