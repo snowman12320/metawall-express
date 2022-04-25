@@ -1,10 +1,8 @@
 const { successHandler, errorHandler } = require('../service/handler');
 const File = require('../models/filesModel');
 const dotenv = require('dotenv');
-dotenv.config({path:'./.env'});
-const dotenv = require('dotenv');
+dotenv.config({path:'../.env'});
 const { S3Client } = require("@aws-sdk/client-s3");
-dotenv.config({path:'./.env'});
 
 const s3 = new S3Client({
     region: process.env.AWS_DEFAULT_REGION,
