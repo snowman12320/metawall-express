@@ -1,39 +1,40 @@
 const { successHandler, errorHandler } = require('../service/handler');
 const File = require('../models/filesModel');
-const { AbortMultipartUploadCommand } = require("@aws-sdk/client-s3");
-const { s3 } = require("../libs/s3Client.js");
 const dotenv = require('dotenv');
 dotenv.config({path:'./.env'});
+const dotenv = require('dotenv');
+const { S3Client } = require("@aws-sdk/client-s3");
+dotenv.config({path:'./.env'});
+
+const s3 = new S3Client({
+    region: process.env.AWS_DEFAULT_REGION,
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    }
+});
 
 const files = {
     postData: async (req, res) => {
         try {
             const { file } = req.body;
-
-            const albumPhotosKey = encodeURIComponent(albumName) + "/";
-            const data = await s3.send(
-                new ListObjectsCommand({
-                    Prefix: albumPhotosKey,
-                    Bucket: 'image'
-                })
-            );
             const fileName = file.name;
-            const photoKey = albumPhotosKey + fileName;
-            const uploadParams = {
-                Bucket: 'image',
-                Key: photoKey,
+            const params = {
+                Bucket: process.env.AWS_BUCKET,
+                Key: fileName,
                 Body: file
             };
             try {
-                const data = await s3.send(new PutObjectCommand(uploadParams));
-                alert("Successfully uploaded photo.");
+                const data = await s3.upload(params, (err, data) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log('Bucket Created Successfully', data.Location);
+                    }
+                });
             } catch (err) {
                 return alert("There was an error uploading your photo: ", err.message);
             }
-
-
-
-
             // const newFile = await File.create(data);
             // successHandler(res, "新增成功", newFile);
             res.end();
