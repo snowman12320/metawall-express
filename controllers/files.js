@@ -2,6 +2,7 @@ const { successHandler, errorHandler } = require('../service/handler');
 const File = require('../models/filesModel');
 const dotenv = require('dotenv');
 dotenv.config({path:'../.env'});
+const { Upload } = require("@aws-sdk/lib-storage");
 const { S3Client } = require("@aws-sdk/client-s3");
 
 const s3 = new S3Client({
@@ -15,31 +16,25 @@ const s3 = new S3Client({
 const files = {
     postData: async (req, res) => {
         try {
-            const { file } = req.body;
-            const fileName = file.name;
+            const { file, file_name } = req.body;
             const params = {
                 Bucket: process.env.AWS_BUCKET,
-                Key: fileName,
+                Key: file_name,
                 Body: file
             };
-            try {
-                const data = await s3.upload(params, (err, data) => {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        console.log('Bucket Created Successfully', data.Location);
-                    }
-                });
-            } catch (err) {
-                return alert("There was an error uploading your photo: ", err.message);
-            }
+            const data = await new Upload({
+                client: new s3({}),
+                params: params
+            });
+            data.on("httpUploadProgress", (progress) => {
+                console.log(progress);
+            });
+            await data.done();
             // const newFile = await File.create(data);
             // successHandler(res, "新增成功", newFile);
             res.end();
         } catch(error) {
             console.log(error);
-            // const errorStr = Object.values(error.errors).map(item => item.message).join('、');
-            // errorHandler(res, errorStr);
             res.end();
         }
     }
