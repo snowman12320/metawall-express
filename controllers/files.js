@@ -23,7 +23,7 @@ const files = {
                 Body: file
             };
             const data = await new Upload({
-                client: new s3({}),
+                client: s3,
                 params: params
             });
             data.on("httpUploadProgress", (progress) => {
