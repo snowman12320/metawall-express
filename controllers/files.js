@@ -34,8 +34,9 @@ const files = {
     postData: async (req, res) => {
         try {
             singleUpload(req, res, function(err, some) {
-                successHandler(res, "新增成功", req.file.location);
-                return successHandler(res, "新增成功", req.file.location);
+                console.log(req.file);
+                successHandler(res, "新增成功", req.file);
+                return successHandler(res, "新增成功", req.file);
             });
         } catch(error) {
             errorHandler(res, error.message);
