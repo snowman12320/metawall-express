@@ -17,6 +17,8 @@ const files = {
     postData: async (req, res) => {
         try {
             const { file, file_name } = req.body;
+            console.log(11111);
+            console.log(file);
             const params = {
                 Bucket: process.env.AWS_BUCKET,
                 Key: file_name,
@@ -24,15 +26,14 @@ const files = {
             };
             const data = await new Upload({
                 client: s3,
-                params: JSON.stringify(params)
+                params: params
             });
             data.on("httpUploadProgress", (progress) => {
                 console.log(progress);
             });
             await data.done();
             // const newFile = await File.create(data);
-            // successHandler(res, "新增成功", newFile);
-            res.end();
+            successHandler(res, "新增成功", data);
         } catch(error) {
             console.log(error);
             res.end();
