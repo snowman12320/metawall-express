@@ -1,7 +1,6 @@
 const { successHandler, errorHandler } = require('../service/handler');
-const File = require('../models/filesModel');
 const dotenv = require('dotenv');
-dotenv.config({path:'../.env'});
+dotenv.config({path:'./.env'});
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const aws = require('aws-sdk');
@@ -34,9 +33,7 @@ const files = {
     postData: async (req, res) => {
         try {
             singleUpload(req, res, function(err, some) {
-                console.log('file', req.body.file);
-                successHandler(res, "新增成功", req.file);
-                return successHandler(res, "新增成功", req.file);
+                successHandler(res, "新增成功", req.file.location);
             });
         } catch(error) {
             errorHandler(res, error.message);
