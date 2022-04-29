@@ -3,7 +3,8 @@ const User = require('../models/usersModel');
 
 const users = {
     getData: async (req, res) => {
-        successHandler(res, "取得成功", { 'name': '王小明' });
+        const user = await User.find();
+        successHandler(res, "取得成功", user);
     }
 }
 

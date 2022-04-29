@@ -18,8 +18,8 @@ const posts = {
     },
     postData: async (req, res) => {
         try {
-            const { name, content, photo, image, likes } = req.body;
-            const data = { name, content, photo, image, likes };
+            const { user, content, photo, image, likes } = req.body;
+            const data = { user, content, photo, image, likes };
             const newPost = await Post.create(data);
             successHandler(res, "新增成功", newPost);
         } catch(error) {
@@ -28,7 +28,6 @@ const posts = {
         }
     },
     deleteAllData: async (req, res) => {
-        console.log(req);
         await Post.deleteMany({});
         successHandler(res, "刪除成功");
     },
@@ -46,8 +45,8 @@ const posts = {
     },
     patchData: async (req, res) => {
         try {
-            const { name, content, photo, image, likes } = req.body;
-            const data = { name, content, photo, image, likes };
+            const { user, content, photo, image, likes } = req.body;
+            const data = { user, content, photo, image, likes };
             if (!data.content) {
                 errorHandler(res, "更新失敗，貼文內容必填");
             } else {
