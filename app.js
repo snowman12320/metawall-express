@@ -17,7 +17,7 @@ const DB = process.env.DATABASE.replace(
     '<password>',
     process.env.DATABASE_PASSWORD
 );
-mongoose.connect('mongodb://localhost:27017/test')
+mongoose.connect(DB)
     .then(res=> console.log("連線資料成功"));
 
 // 載入設定檔
