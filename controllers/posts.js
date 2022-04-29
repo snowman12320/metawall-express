@@ -1,12 +1,19 @@
 const { successHandler, errorHandler } = require('../service/handler');
 const Post = require('../models/postsModel');
+const User = require('../models/usersModel');
 
 const posts = {
     getData: async (req, res) => {
-        const { content } = req.query;
+        const { keyword, sort } = req.query;
+        const dateSort = sort === 'desc' ? -1 : 1;
         const post = await Post.find({
-            content: { $regex: content || '' }
-        }).sort({ 'createdAt': -1 });
+            content: { $regex: keyword || '' }
+        })
+            .populate({ 
+                path: 'user', // post 內 user 欄位
+                select: 'name photo' // 取出相關聯 collection name & photo
+            })
+            .sort({ 'createdAt': dateSort });
         successHandler(res, "取得成功", post);
     },
     postData: async (req, res) => {
@@ -20,7 +27,8 @@ const posts = {
             errorHandler(res, errorStr);
         }
     },
-    deleteAllData: async res => {
+    deleteAllData: async (req, res) => {
+        console.log(req);
         await Post.deleteMany({});
         successHandler(res, "刪除成功");
     },

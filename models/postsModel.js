@@ -2,17 +2,14 @@ const mongoose = require('mongoose');
 
 const postSchema = new mongoose.Schema(
     {
-        name: {
-            type: String,
-            required: [ true, '貼文姓名未填寫' ]
+        user: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'User', // 連接到 User collection
+            required: [ true, 'user id 未填寫' ]
         },
         content: {
             type: String,
             required: [ true, '貼文內容未填寫' ]
-        },
-        photo: {
-            type: String,
-            default: ''
         },
         image: {
             type: String,
@@ -20,7 +17,7 @@ const postSchema = new mongoose.Schema(
         },
         createdAt: {
             type: Date,
-            default: Date.now(),
+            default: Date.now, // 即時更新
             select: true
         },
         likes: {
