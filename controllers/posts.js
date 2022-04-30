@@ -18,8 +18,8 @@ const posts = {
     },
     postData: async (req, res) => {
         try {
-            const { user, content, photo, image, likes } = req.body;
-            const data = { user, content, photo, image, likes };
+            const { user, content, image, likes } = req.body;
+            const data = { user, content, image, likes };
             const newPost = await Post.create(data);
             successHandler(res, "新增成功", newPost);
         } catch(error) {
@@ -49,8 +49,8 @@ const posts = {
     },
     patchData: async (req, res) => {
         try {
-            const { user, content, photo, image, likes } = req.body;
-            const data = { user, content, photo, image, likes };
+            const { user, content, image, likes } = req.body;
+            const data = { user, content, image, likes };
             if (!data.content) {
                 errorHandler(res, "更新失敗，貼文內容必填");
             } else {
