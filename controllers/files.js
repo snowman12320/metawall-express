@@ -1,9 +1,10 @@
 const { successHandler, errorHandler } = require('../service/handler');
-const dotenv = require('dotenv');
-dotenv.config({path:'./.env'});
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const aws = require('aws-sdk');
+const uuid4 = require('uuid4');
+const dotenv = require('dotenv');
+dotenv.config({path:'./.env'});
 
 aws.config.update({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -22,7 +23,7 @@ const upload = multer({
             cb(null, {fieldName: file.fieldname});
         },
         key: function (req, file, cb) {
-            cb(null, Date.now().toString())
+            cb(null, uuid4());
         }
     })
 })

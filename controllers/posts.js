@@ -28,8 +28,12 @@ const posts = {
         }
     },
     deleteAllData: async (req, res) => {
-        await Post.deleteMany({});
-        successHandler(res, "刪除成功");
+        if (req.originalUrl === '/posts/') {
+            errorHandler(res, "無此網站路由", 404);
+        } else {
+            await Post.deleteMany({});
+            successHandler(res, "刪除成功");
+        }
     },
     deleteSingleData: async (req, res) => {
         try {
