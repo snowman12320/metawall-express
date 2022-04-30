@@ -11,7 +11,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://peaceful-citadel-43202.herokuapp.com/posts?content",
+					"raw": "https://peaceful-citadel-43202.herokuapp.com/posts?keyword=&sort=desc",
 					"protocol": "https",
 					"host": [
 						"peaceful-citadel-43202",
@@ -23,8 +23,12 @@
 					],
 					"query": [
 						{
-							"key": "content",
-							"value": null
+							"key": "keyword",
+							"value": ""
+						},
+						{
+							"key": "sort",
+							"value": "desc"
 						}
 					]
 				}
@@ -38,7 +42,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"TingYu\",\n    \"content\": \"這是我的貼文內容\",\n    \"photo\": \"\",\n    \"image\": \"\",\n    \"likes\": 20000\n}",
+					"raw": "{\n    \"user\": \"626c14b5fdb48b9d205ef262\",\n    \"content\": \"這是我的貼文內容\",\n    \"image\": \"\",\n    \"likes\": 20000\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -104,7 +108,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://peaceful-citadel-43202.herokuapp.com/posts/6263a9d535ea3f4a30598ca0",
+					"raw": "https://peaceful-citadel-43202.herokuapp.com/posts/626cbe38d57ed1e894a74e06",
 					"protocol": "https",
 					"host": [
 						"peaceful-citadel-43202",
@@ -113,7 +117,57 @@
 					],
 					"path": [
 						"posts",
-						"6263a9d535ea3f4a30598ca0"
+						"626cbe38d57ed1e894a74e06"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUsers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://peaceful-citadel-43202.herokuapp.com/users",
+					"protocol": "https",
+					"host": [
+						"peaceful-citadel-43202",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostFile",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/Users/clairechang/Desktop/測試用圖片/picture.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://peaceful-citadel-43202.herokuapp.com/files",
+					"protocol": "https",
+					"host": [
+						"peaceful-citadel-43202",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"files"
 					]
 				}
 			},
@@ -134,7 +188,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://peaceful-citadel-43202.herokuapp.com/posts/6263a9e135ea3f4a30598ca2",
+					"raw": "https://peaceful-citadel-43202.herokuapp.com/posts/626cbe38d57ed1e894a74e06",
 					"protocol": "https",
 					"host": [
 						"peaceful-citadel-43202",
@@ -143,7 +197,7 @@
 					],
 					"path": [
 						"posts",
-						"6263a9e135ea3f4a30598ca2"
+						"626cbe38d57ed1e894a74e06"
 					]
 				}
 			},
