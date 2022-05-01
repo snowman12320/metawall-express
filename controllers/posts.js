@@ -6,7 +6,7 @@ const posts = {
     getData: async (req, res) => {
         const { keyword, sort } = req.query;
         const dateSort = sort === 'desc' ? -1 : 1;
-        const post = await Post.find({
+        const posts = await Post.find({
             content: { $regex: keyword || '' }
         })
             .populate({ 
@@ -14,7 +14,7 @@ const posts = {
                 select: 'name photo' // 取出相關聯 collection name & photo
             })
             .sort({ 'createdAt': dateSort });
-        successHandler(res, "取得成功", post);
+        successHandler(res, "取得成功", posts);
     },
     postData: async (req, res) => {
         try {
