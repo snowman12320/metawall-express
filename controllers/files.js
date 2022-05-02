@@ -34,7 +34,11 @@ const files = {
     postData: async (req, res) => {
         try {
             singleUpload(req, res, function(err, some) {
-                successHandler(res, "新增成功", req.file.location);
+                if (!req.file) {
+                    errorHandler(res, '圖片上傳失敗：查無此圖片');
+                } else {
+                    successHandler(res, "新增成功", req.file.location);
+                }
             });
         } catch(error) {
             errorHandler(res, error.message);
