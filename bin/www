@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('project3:server');
 var http = require('http');
+const WebSocket = require('ws');
 
 /**
  * Get port from environment and store in Express.
@@ -20,6 +21,25 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+
+/**
+ * Add WebSocket
+ */
+
+const wss = new WebSocket.Server({ server: server, path: '/websockets' });
+wss.on('connection', ws => {
+  ws.on('message', data => {
+      // 取得所有連接中的 client
+      const clients = wss.clients;
+      // 做迴圈，發送訊息至每個 client
+      clients.forEach(client => {
+          client.send(data);
+      })
+  })
+  ws.on('close', () => {
+      console.log('close connected');
+  })
+});
 
 /**
  * Listen on provided port, on all network interfaces.
