@@ -20,8 +20,19 @@ const posts = {
         try {
             const { user, content, image, likes } = req.body;
             const data = { user, content, image, likes };
-            const newPost = await Post.create(data);
-            successHandler(res, "新增成功", newPost);
+            const errorMessage = [];
+            if (!user) {
+                errorMessage.push('查無使用者');
+            }
+            if (!content) {
+                errorMessage.push('內容必填');
+            }
+            if (errorMessage.length === 0) {
+                const newPost = await Post.create(data);
+                successHandler(res, "新增成功", newPost);
+            } else {
+                errorHandler(res, errorMessage.join(', '));
+            }
         } catch(error) {
             const errorStr = Object.values(error.errors).map(item => item.message).join('、');
             errorHandler(res, errorStr);
