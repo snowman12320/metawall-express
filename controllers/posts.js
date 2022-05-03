@@ -28,12 +28,13 @@ const posts = {
                 errorMessage.push('內容必填');
             }
             if (errorMessage.length === 0) {
-                const newPost = await Post.create(data)
+                const newPost = await Post.create(data);
+                const post = await Post.findById(newPost.user)
                     .populate({ 
                         path: 'user', // post 內 user 欄位
                         select: 'name photo' // 取出相關聯 collection name & photo
                     });
-                successHandler(res, "新增成功", newPost);
+                successHandler(res, "新增成功", post);
             } else {
                 errorHandler(res, errorMessage.join(', '));
             }
