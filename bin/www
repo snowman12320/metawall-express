@@ -31,7 +31,7 @@ wss.on('connection', ws => {
   ws.on('message', data => {
       // 取得所有連接中的 client
       const clients = wss.clients;
-      // 做迴圈，發送訊息至每個 client
+      // 發送訊息至每個 client
       clients.forEach(client => {
           client.send(data);
       })

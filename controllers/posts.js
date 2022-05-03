@@ -28,7 +28,11 @@ const posts = {
                 errorMessage.push('內容必填');
             }
             if (errorMessage.length === 0) {
-                const newPost = await Post.create(data);
+                const newPost = await Post.create(data)
+                    .populate({ 
+                        path: 'user', // post 內 user 欄位
+                        select: 'name photo' // 取出相關聯 collection name & photo
+                    });
                 successHandler(res, "新增成功", newPost);
             } else {
                 errorHandler(res, errorMessage.join(', '));
@@ -69,7 +73,11 @@ const posts = {
                 if (!editPost) { // 查無此筆(editPost=null，跳false訊息)
                     errorHandler(res, "更新失敗，查無此id或欄位格式錯誤");
                 } else {
-                    const post = await Post.findById(req.params.id);
+                    const post = await Post.findById(req.params.id)
+                        .populate({ 
+                            path: 'user', // post 內 user 欄位
+                            select: 'name photo' // 取出相關聯 collection name & photo
+                        });
                     successHandler(res, "更新成功", post);
                 }
             }
