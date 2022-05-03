@@ -29,12 +29,7 @@ const posts = {
             }
             if (errorMessage.length === 0) {
                 const newPost = await Post.create(data);
-                const post = await Post.findById(newPost.user)
-                    .populate({ 
-                        path: 'user', // post 內 user 欄位
-                        select: 'name photo' // 取出相關聯 collection name & photo
-                    });
-                successHandler(res, "新增成功", post);
+                successHandler(res, "新增成功", newPost);
             } else {
                 errorHandler(res, errorMessage.join(', '));
             }
