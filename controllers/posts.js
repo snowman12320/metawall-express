@@ -20,21 +20,22 @@ const posts = {
         try {
             const { user, content, image, likes } = req.body;
             const data = { user, content, image, likes };
-            const errorMessage = [];
-            if (!user) {
-                errorMessage.push('查無使用者');
-            }
-            if (!content) {
-                errorMessage.push('內容必填');
-            }
-            if (errorMessage.length === 0) {
-                const newPost = await Post.create(data);
-                successHandler(res, "新增成功", newPost);
+            if (!user || !content) {
+                errorHandler(res, '使用者與內容必填');
             } else {
-                errorHandler(res, errorMessage.join(', '));
+                const findUser = await User.findById(user).exec();
+                if (!findUser) {
+                    errorHandler(res, '查無使用者');
+                } else {
+                    const newPost = await Post.create(data);
+                    successHandler(res, "新增成功", newPost);
+                }
             }
         } catch(error) {
-            const errorStr = Object.values(error.errors).map(item => item.message).join('、');
+            let errorStr = error;
+            if (error.errors) {
+                errorStr = Object.values(error.errors).map(item => item.message).join('、');
+            }
             errorHandler(res, errorStr);
         }
     },
