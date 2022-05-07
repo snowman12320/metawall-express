@@ -5,6 +5,8 @@ const logger = require('morgan');
 const cors = require('cors');
 const { errorHandler } = require('./service/handler');
 const dotenv = require('dotenv');
+const swaggerUI = require('swagger-ui-express');
+const swaggerFile = require('./swagger-output.json');
 const filesRouter = require('./routes/files');
 const postsRouter = require('./routes/posts');
 const usersRouter = require('./routes/users');
@@ -34,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/files', filesRouter);
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
+app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
 
 // 404
 app.use((req, res, next) => {
@@ -46,7 +49,7 @@ const resErrorProd = (error, res) => {
     if (error.isOperational) {
         errorHandler(res, error.message, error.statusCode);
     } else {
-        console.error('出現重大錯誤', err);
+        console.error('出現重大錯誤', error);
         // 送出預設訊息
         errorHandler(res, '系統異常', 500, 'error');
     }
@@ -65,7 +68,7 @@ const resErrorDev = (error, res) => {
 app.use((error, req, res, next) => {
     error.statusCode = error.statusCode || 500;
     // dev
-    if (process.env.NODE_ENV === 'dev') {
+    if (process.env.NODE_ENV === 'develop') {
         return resErrorDev(error, res);
     }
     // prod

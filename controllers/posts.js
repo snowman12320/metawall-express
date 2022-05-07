@@ -41,7 +41,7 @@ const posts = {
             successHandler(res, "刪除成功");
         }
     }),
-    deleteSingleData: handleErrorAsync (async (req, res) => {
+    deleteSingleData: handleErrorAsync (async (req, res, next) => {
         const deletePost = await Post.findByIdAndDelete(req.params.id);
         if (!deletePost) { // 查無此筆(deletePost=null，跳false訊息)
             return appError("刪除失敗，查無此id", 400, next);
@@ -49,7 +49,7 @@ const posts = {
             successHandler(res, "刪除成功");
         }
     }),
-    patchData: handleErrorAsync (async (req, res) => {
+    patchData: handleErrorAsync (async (req, res, next) => {
         const { user, content, image, likes } = req.body;
         const data = { user, content, image, likes };
         if (!data.content) {

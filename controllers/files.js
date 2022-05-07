@@ -38,7 +38,7 @@ const files = {
             if (!req.file) {
                 return appError("圖片上傳失敗：查無此圖片", 400, next);
             } else {
-                successHandler(res, "新增成功", req.file.location);
+                successHandler(res, "上傳成功", req.file.location);
             }
         });
     })

@@ -1,0 +1,461 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "MetaWall API",
+    "description": "MetaWall 生成文件"
+  },
+  "host": "localhost:3005",
+  "basePath": "/",
+  "tags": [],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [],
+  "produces": [],
+  "paths": {
+    "/files": {
+      "post": {
+        "tags": [
+          "Files"
+        ],
+        "description": "上傳單張圖片",
+        "parameters": [
+          {
+            "name": "image",
+            "in": "formData",
+            "type": "file",
+            "required": true,
+            "description": "資料格式"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "圖片資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "上傳成功"
+                },
+                "data": {
+                  "type": "string",
+                  "example": "https://metawallstorage3.s3.ap-northeast-2.amazonaws.com/d4037168"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "取得全部 user",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "user 資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "取得成功"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "626c14b5fdb48b9d205ef262"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "王小明"
+                      },
+                      "photo": {
+                        "type": "string",
+                        "example": "aaa.jpg"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/posts": {
+      "get": {
+        "tags": [
+          "Posts"
+        ],
+        "description": "取得全部貼文",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": "排序：desc/asc"
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": "關鍵字搜尋"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "貼文資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "取得成功"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "example": "王小明"
+                      },
+                      "photo": {
+                        "type": "string",
+                        "example": "aaa.jpg"
+                      },
+                      "content": {
+                        "type": "string",
+                        "example": "這是我的貼文內容"
+                      },
+                      "image": {
+                        "type": "string",
+                        "example": "bbb.jpg"
+                      },
+                      "likes": {
+                        "type": "number",
+                        "example": 20000
+                      },
+                      "_id": {
+                        "type": "string",
+                        "example": "6276252a59d61d0687896756"
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "2022-05-07T07:52:10.937Z"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Posts"
+        ],
+        "description": "新增單一貼文",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "type": "object",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "type": "string",
+                  "example": "626c14b5fdb48b9d205ef262"
+                },
+                "content": {
+                  "type": "string",
+                  "example": "這是我的貼文內容"
+                },
+                "image": {
+                  "type": "string",
+                  "example": "bbb.jpg"
+                },
+                "likes": {
+                  "type": "number",
+                  "example": 300
+                }
+              },
+              "required": [
+                "user",
+                "content"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "貼文資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "取得成功"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "王小明"
+                    },
+                    "photo": {
+                      "type": "string",
+                      "example": "aaa.jpg"
+                    },
+                    "content": {
+                      "type": "string",
+                      "example": "這是我的貼文內容"
+                    },
+                    "image": {
+                      "type": "string",
+                      "example": "bbb.jpg"
+                    },
+                    "likes": {
+                      "type": "number",
+                      "example": 20000
+                    },
+                    "_id": {
+                      "type": "string",
+                      "example": "6276252a59d61d0687896756"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2022-05-07T07:52:10.937Z"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Posts"
+        ],
+        "description": "刪除全部貼文",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "刪除成功"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/posts/{id}": {
+      "delete": {
+        "tags": [
+          "Posts"
+        ],
+        "description": "刪除單一貼文",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "貼文 id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "刪除成功"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Posts"
+        ],
+        "description": "編輯單一貼文",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "貼文 id"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "type": "object",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "type": "string",
+                  "example": "626c14b5fdb48b9d205ef262"
+                },
+                "content": {
+                  "type": "string",
+                  "example": "這是我的貼文內容"
+                },
+                "image": {
+                  "type": "string",
+                  "example": "bbb.jpg"
+                },
+                "likes": {
+                  "type": "number",
+                  "example": 300
+                }
+              },
+              "required": [
+                "user",
+                "content"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "貼文資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "更新成功"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "王小明"
+                    },
+                    "photo": {
+                      "type": "string",
+                      "example": "aaa.jpg"
+                    },
+                    "content": {
+                      "type": "string",
+                      "example": "這是我的貼文內容"
+                    },
+                    "image": {
+                      "type": "string",
+                      "example": "bbb.jpg"
+                    },
+                    "likes": {
+                      "type": "number",
+                      "example": 20000
+                    },
+                    "_id": {
+                      "type": "string",
+                      "example": "6276252a59d61d0687896756"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2022-05-07T07:52:10.937Z"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {}
+}

@@ -1,4 +1,4 @@
-const successHandler = (res, message, data = []) => {
+const successHandler = (res, message, data = {}) => {
     res.status(200).json({
         status: "success",
         message: message,
