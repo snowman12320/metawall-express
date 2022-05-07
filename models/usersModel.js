@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
         lowercase: true,
         select: false
     },
-    photo: String,
+    photo: String
 });
 
 const User = mongoose.model('User', userSchema);

@@ -3,6 +3,8 @@ const multer = require('multer');
 const multerS3 = require('multer-s3');
 const aws = require('aws-sdk');
 const uuid4 = require('uuid4');
+const appError = require('../service/appError');
+const handleErrorAsync = require('../service/handleErrorAsync');
 const dotenv = require('dotenv');
 dotenv.config({path:'./.env'});
 
@@ -31,19 +33,15 @@ const upload = multer({
 const singleUpload = upload.single('image');
 
 const files = {
-    postData: async (req, res) => {
-        try {
-            singleUpload(req, res, function(err, some) {
-                if (!req.file) {
-                    errorHandler(res, '圖片上傳失敗：查無此圖片');
-                } else {
-                    successHandler(res, "新增成功", req.file.location);
-                }
-            });
-        } catch(error) {
-            errorHandler(res, error.message);
-        }
-    }
+    postData: handleErrorAsync(async (req, res, next) => {
+        singleUpload(req, res, function(err, some) {
+            if (!req.file) {
+                return appError("圖片上傳失敗：查無此圖片", 400, next);
+            } else {
+                successHandler(res, "新增成功", req.file.location);
+            }
+        });
+    })
 }
 
 module.exports = files;
