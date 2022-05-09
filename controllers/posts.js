@@ -5,7 +5,7 @@ const Post = require('../models/postsModel');
 const User = require('../models/usersModel');
 
 const posts = {
-    getData: async (req, res, next) => {
+    getData: handleErrorAsync(async (req, res, next) => {
         const { keyword, sort } = req.query;
         const dateSort = sort === 'desc' ? -1 : 1;
         const posts = await Post.find({
@@ -17,7 +17,7 @@ const posts = {
             })
             .sort({ 'createdAt': dateSort });
         successHandler(res, "取得成功", posts);
-    },
+    }),
     postData: handleErrorAsync(async (req, res, next) => {
         const { user, content, image, likes } = req.body;
         const data = { user, content, image, likes };
