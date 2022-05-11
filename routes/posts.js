@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const posts = require('../controllers/posts');
+const { checkAuth, generateSendJWT } = require('../service/auth');
 
 router.get('', (req, res, next) => {
     /**
@@ -38,7 +39,7 @@ router.get('', (req, res, next) => {
     posts.getData(req, res, next);
 });
 
-router.post('', (req, res, next) => {
+router.post('', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Posts']
      * #swagger.description = '新增單一貼文'

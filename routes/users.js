@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const users = require('../controllers/users');
+const { checkAuth, generateSendJWT } = require('../service/auth');
 
-router.post('/register', function(req, res, next) {
+router.post('/register', (req, res, next) => {
     /**
      * #swagger.tags = ['Users']
      * #swagger.description = '取得全部 user'
@@ -22,12 +23,19 @@ router.post('/register', function(req, res, next) {
     users.register(req, res, next);
 });
 
-// login
-router.post('/login', function(req, res, next) {
+router.post('/login', (req, res, next) => {
     /**
      * #swagger.ignore = true
      */
     users.login(req, res, next);
+});
+
+router.get('/profile', checkAuth, (req, res, next) => {
+    users.getProfile(req, res, next);
+});
+
+router.get('/update-password', checkAuth, (req, res, next) => {
+    users.updatePassword(req, res, next);
 });
 
 module.exports = router;
