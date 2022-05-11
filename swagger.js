@@ -5,7 +5,7 @@ const doc = {
         title: "MetaWall API",
         description: "MetaWall 生成文件"
     },
-    host: "localhost:3005",
+    host: "https://peaceful-citadel-43202.herokuapp.com",
     schemes: ['http', 'https']
 }
 

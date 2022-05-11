@@ -4,7 +4,7 @@
     "title": "MetaWall API",
     "description": "MetaWall 生成文件"
   },
-  "host": "localhost:3005",
+  "host": "https://peaceful-citadel-43202.herokuapp.com",
   "basePath": "/",
   "tags": [],
   "schemes": [
@@ -56,8 +56,8 @@
         }
       }
     },
-    "/users": {
-      "get": {
+    "/users/register": {
+      "post": {
         "tags": [
           "Users"
         ],
@@ -104,6 +104,22 @@
             }
           }
         }
+      }
+    },
+    "/users/profile": {
+      "get": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/users/update-password": {
+      "get": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
+        "responses": {}
       }
     },
     "/posts": {
