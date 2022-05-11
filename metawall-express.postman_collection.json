@@ -11,14 +11,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "127.0.0.1:3005/posts?keyword=&sort=desc",
+					"raw": "https://peaceful-citadel-43202.herokuapp.com/posts?keyword=&sort=desc",
+					"protocol": "https",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"peaceful-citadel-43202",
+						"herokuapp",
+						"com"
 					],
-					"port": "3005",
 					"path": [
 						"posts"
 					],
@@ -43,7 +42,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"user\": \"626bf9120d27c27cf97b5590\",\n    \"content\": \"這是我的貼文內容\",\n    \"image\": \"\",\n    \"likes\": 20000\n}",
+					"raw": "{\n    \"user\": \"627bb1b4d6eb1a208ca52b4a\",\n    \"content\": \"這是我的貼文內容\",\n    \"image\": \"\",\n    \"likes\": 20000\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -149,6 +148,26 @@
 					"path": [
 						"posts",
 						"627ba82fd5169f2106357266"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUsers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://peaceful-citadel-43202.herokuapp.com/users",
+					"protocol": "https",
+					"host": [
+						"peaceful-citadel-43202",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"users"
 					]
 				}
 			},

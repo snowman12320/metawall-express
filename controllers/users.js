@@ -9,6 +9,10 @@ const dotenv = require('dotenv');
 dotenv.config({path: './config.env'});
 
 const users = {
+    getData: async (req, res, next) => {
+        const user = await User.find();
+        successHandler(res, "取得成功", user);
+    },
     register: handleErrorAsync(async (req, res, next) => {
         let { name, email, password, confirmPassword, photo } = req.body;
         if ( !name || !email || !password || !confirmPassword) {
