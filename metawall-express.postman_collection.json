@@ -1,0 +1,188 @@
+{
+	"info": {
+		"_postman_id": "c7b2e719-817e-4912-be2a-1b97788c8303",
+		"name": "metawall-express",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:3005/posts?keyword=&sort=desc",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3005",
+					"path": [
+						"posts"
+					],
+					"query": [
+						{
+							"key": "keyword",
+							"value": ""
+						},
+						{
+							"key": "sort",
+							"value": "desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user\": \"626bf9120d27c27cf97b5590\",\n    \"content\": \"這是我的貼文內容\",\n    \"image\": \"\",\n    \"likes\": 20000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://peaceful-citadel-43202.herokuapp.com/posts",
+					"protocol": "https",
+					"host": [
+						"peaceful-citadel-43202",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteAll",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://peaceful-citadel-43202.herokuapp.com/posts",
+					"protocol": "https",
+					"host": [
+						"peaceful-citadel-43202",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteSingle",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://peaceful-citadel-43202.herokuapp.com/posts/627ba81fd5169f2106357262",
+					"protocol": "https",
+					"host": [
+						"peaceful-citadel-43202",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"posts",
+						"627ba81fd5169f2106357262"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"content\": \"測試測試測試\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://peaceful-citadel-43202.herokuapp.com/posts/627ba82fd5169f2106357266",
+					"protocol": "https",
+					"host": [
+						"peaceful-citadel-43202",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"posts",
+						"627ba82fd5169f2106357266"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostFile",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/Users/clairechang/Desktop/測試用圖片/A.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://peaceful-citadel-43202.herokuapp.com/files",
+					"protocol": "https",
+					"host": [
+						"peaceful-citadel-43202",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"files"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

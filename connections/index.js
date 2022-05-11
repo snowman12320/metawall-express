@@ -8,7 +8,7 @@ const DB = process.env.DATABASE.replace(
     process.env.DATABASE_PASSWORD
 );
 
-mongoose.connect('mongodb://localhost:27017/test')
+mongoose.connect(DB)
     .then(() => 
         console.log("連線資料成功")
     );

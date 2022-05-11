@@ -39,7 +39,7 @@ router.get('', (req, res, next) => {
     posts.getData(req, res, next);
 });
 
-router.post('', checkAuth, (req, res, next) => {
+router.post('', (req, res, next) => {
     /**
      * #swagger.tags = ['Posts']
      * #swagger.description = '新增單一貼文'
