@@ -15,9 +15,9 @@ const app = express();
 // 程式出現重大錯誤時
 process.on('uncaughtException', error => {
     // 記錄錯誤下來，等到服務都處理完後，停掉該 process
-	console.error('Uncaughted Exception！')
-	console.error(error);
-	process.exit(1);
+    console.error('Uncaughted Exception！');
+    console.error(error);
+    process.exit(1);
 });
 
 dotenv.config({path:'./.env'});
@@ -58,6 +58,7 @@ const resErrorProd = (error, res) => {
 // develop 環境錯誤
 const resErrorDev = (error, res) => {
     res.status(error.statusCode).json({
+        status: "false",
         message: error.message,
         error: error,
         stack: error.stack
