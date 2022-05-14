@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken'); // token
 const appError = require('../service/appError');
 const handleErrorAsync = require('../service/handleErrorAsync');
+const { successHandler, errorHandler } = require('../service/handler');
+const User = require('../models/usersModel');
 
 // 檢查 token 是否存在
 const checkAuth = handleErrorAsync (async (req, res, next) => {
@@ -10,14 +12,14 @@ const checkAuth = handleErrorAsync (async (req, res, next) => {
         token = auth.split(' ')[1];
     }
     if (!token) {
-        return appError('您尚未登入', 401, next);
+        return appError('請重新登入', 401, next);
     }
     // 解密，還原物件
     const decode = await new Promise((resolve, reject) => {
         jwt.verify(token, process.env.JWT_SECRET, (error, payload) => {
             error ? reject(error) : resolve(payload);
         });
-    })
+    });
     const currentUser = await User.findById(decode.id);
     req.user = currentUser;
     next();
@@ -31,7 +33,10 @@ const generateSendJWT = (res, message, user) => {
     user.password = undefined;
     const data = {
         token,
-        name: user.name
+        profile: {
+            name: user.name,
+            photo: user.photo
+        }
     };
     successHandler(res, message, data);
 };

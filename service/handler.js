@@ -6,7 +6,7 @@ const successHandler = (res, message, data = {}, statusCode = 200) => {
     });
 }
 
-const errorHandler = (res, message, statusCode = 400, status = false) => {
+const errorHandler = (res, message, statusCode = 400, status = "false") => {
     res.status(statusCode).json({
         status: status,
         message: message

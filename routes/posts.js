@@ -39,7 +39,7 @@ router.get('', (req, res, next) => {
     posts.getData(req, res, next);
 });
 
-router.post('', (req, res, next) => {
+router.post('', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Posts']
      * #swagger.description = '新增單一貼文'
@@ -111,7 +111,7 @@ router.delete('/:id', (req, res, next) => {
     posts.deleteSingleData(req, res, next);
 });
 
-router.patch('/:id', (req, res, next) => {
+router.patch('/:id', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Posts']
      * #swagger.description = '編輯單一貼文'

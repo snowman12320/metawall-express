@@ -9,12 +9,8 @@ const dotenv = require('dotenv');
 dotenv.config({path: './config.env'});
 
 const users = {
-    getData: async (req, res, next) => {
-        const user = await User.find();
-        successHandler(res, "取得成功", user);
-    },
     register: handleErrorAsync(async (req, res, next) => {
-        let { name, email, password, confirmPassword, photo } = req.body;
+        let { name, email, password, confirmPassword } = req.body;
         if ( !name || !email || !password || !confirmPassword) {
             return appError('欄位未填寫完整', 400, next);
         }
@@ -34,8 +30,19 @@ const users = {
             return appError(errorMessage, 400, next);
         }
 
+        const findUserByName = await User.findOne({ name });
+        if (findUserByName) {
+            return appError('暱稱重複', 400, next);
+        }
+
+        const findUserByMail = await User.findOne({ email });
+        if (findUserByMail) {
+            return appError('email 已註冊', 400, next);
+        }
+
         password = await bcrypt.hash(password, 12); // 密碼加密
-        await User.create({ name, email, password, photo });
+        const data = { name, email, password, photo: '', gender: '' };
+        await User.create(data);
         successHandler(res, "註冊成功，請重新登入", {}, 201);
     }),
     login: handleErrorAsync(async (req, res, next) => {
@@ -45,7 +52,7 @@ const users = {
         }
         const user = await User.findOne({ email }).select('+password');
         if (!user) {
-            return appError('此帳號尚未註冊', 400, next);
+            return appError('帳號錯誤或尚未註冊', 400, next);
         }
         const isVerify = await bcrypt.compare(password, user.password);
         if (!isVerify) {
@@ -55,6 +62,17 @@ const users = {
     }),
     getProfile: handleErrorAsync(async (req, res, next) => {
         successHandler(res, "取得成功", req.user);
+    }),
+    viewProfile: handleErrorAsync(async (req, res, next) => {
+        if (!req.params.name) {
+            return appError('使用者必填', 400, next);
+        }
+        const user = await User.findOne({ name: req.params.name });
+        if (!user) {
+            return appError('查無使用者', 400, next);
+        }
+        const { name, photo } = user;
+        successHandler(res, "取得成功", { name, photo });
     }),
     updatePassword: handleErrorAsync(async (req, res, next) => {
         const { password, confirmPassword } = req.body;
@@ -70,10 +88,20 @@ const users = {
             return appError(errorMessage, 400, next);
         }
         newPassword = await bcrypt.hash(password, 12); // 密碼加密
-        const updateUser = User.findByIdAndUpdate(req.user.id, {
+        const updateUser = await User.findByIdAndUpdate(req.user.id, {
             password: newPassword
         });
         generateSendJWT(res, "更新成功", updateUser); // 產生新 token
+    }),
+    patchProfile: handleErrorAsync(async (req, res, next) => {
+        const { name, photo, gender } = req.body;
+        const data = { name, photo, gender };
+        if (!name) {
+            return appError("名稱必填", 400, next);
+        }
+        await User.findByIdAndUpdate(req.user.id, data);
+        const updateUser = await User.findById(req.user.id);
+        successHandler(res, "更新成功", updateUser);
     })
 }
 

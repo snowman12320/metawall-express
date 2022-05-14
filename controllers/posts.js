@@ -6,32 +6,29 @@ const User = require('../models/usersModel');
 
 const posts = {
     getData: handleErrorAsync(async (req, res, next) => {
-        const { keyword, sort } = req.query;
-        const dateSort = sort === 'desc' ? -1 : 1;
-        const posts = await Post.find({
-            content: { $regex: keyword || '' }
-        })
+        const { name, keyword, sort } = req.query;
+        const dateSort = sort === 'desc' ? '-createdAt' : 'createdAt';
+        const user = name ? await User.findOne({ name }) : null;
+        const data = user 
+            ? { user: user._id, content: { $regex: keyword || '' } }
+            : { content: { $regex: keyword || '' } };
+        const posts = await Post.find(data)
             .populate({ 
                 path: 'user', // post 內 user 欄位
                 select: 'name photo' // 取出相關聯 collection name & photo
             })
-            .sort({ 'createdAt': dateSort });
+            .sort(dateSort);
         successHandler(res, "取得成功", posts);
     }),
     postData: handleErrorAsync(async (req, res, next) => {
-        const { user, content, image, likes } = req.body;
-        const data = { user, content, image, likes };
-        if (!user || !content) {
-            return appError('使用者與內容必填', 400, next);
-        } else {
-            const findUser = await User.findById(user).exec();
-            if (!findUser) {
-                return appError('查無使用者', 400, next);
-            } else {
-                const newPost = await Post.create(data);
-                successHandler(res, "新增成功", newPost);
-            }
+        const user = req.user.id;
+        const { content, image } = req.body;
+        const data = { user, content, image };
+        if (!content) {
+            return appError('內容必填', 400, next);
         }
+        const newPost = await Post.create(data);
+        successHandler(res, "新增成功", newPost);
     }),
     deleteAllData: handleErrorAsync (async (req, res, next) => {
         if (req.originalUrl === '/posts/') {
@@ -50,8 +47,8 @@ const posts = {
         }
     }),
     patchData: handleErrorAsync (async (req, res, next) => {
-        const { user, content, image, likes } = req.body;
-        const data = { user, content, image, likes };
+        const { content, image, likes } = req.body;
+        const data = { content, image, likes };
         if (!data.content) {
             return appError("更新失敗，貼文內容必填", 400, next);
         } else {
