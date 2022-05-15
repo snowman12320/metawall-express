@@ -11,6 +11,7 @@ const filesRouter = require('./routes/files');
 const postsRouter = require('./routes/posts');
 const usersRouter = require('./routes/users');
 const app = express();
+const history = require('connect-history-api-fallback');
 
 // 程式出現重大錯誤時
 process.on('uncaughtException', error => {
@@ -33,9 +34,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/files', filesRouter);
-app.use('/users', usersRouter);
-app.use('/posts', postsRouter);
+app.use('/api/v1/files', filesRouter);
+app.use('/api/v1/users', usersRouter);
+app.use('/api/v1/posts', postsRouter);
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
 
 // 404
@@ -85,5 +86,7 @@ app.use((error, req, res, next) => {
 process.on('unhandledRejection', (error, promise) => {
     console.log('未捕捉到的 rejection：', promise, '原因：', error);
 })
+
+app.use(history());
 
 module.exports = app;

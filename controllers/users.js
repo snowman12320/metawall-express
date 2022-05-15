@@ -60,10 +60,10 @@ const users = {
         }
         generateSendJWT(res, "登入成功", user); // 產生 token
     }),
-    getProfile: handleErrorAsync(async (req, res, next) => {
+    getOwnProfile: handleErrorAsync(async (req, res, next) => {
         successHandler(res, "取得成功", req.user);
     }),
-    viewProfile: handleErrorAsync(async (req, res, next) => {
+    getProfileByName: handleErrorAsync(async (req, res, next) => {
         if (!req.params.name) {
             return appError('使用者必填', 400, next);
         }

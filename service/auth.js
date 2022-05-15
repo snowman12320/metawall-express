@@ -12,7 +12,7 @@ const checkAuth = handleErrorAsync (async (req, res, next) => {
         token = auth.split(' ')[1];
     }
     if (!token) {
-        return appError('請重新登入', 401, next);
+        return appError('驗證失敗，請重新登入', 401, next);
     }
     // 解密，還原物件
     const decode = await new Promise((resolve, reject) => {

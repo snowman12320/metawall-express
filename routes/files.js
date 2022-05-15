@@ -7,7 +7,13 @@ router.post('', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Files']
      * #swagger.description = '上傳單張圖片'
-    * #swagger.parameters['body'] = {
+     * #swagger.parameters['Authorization'] = {
+            in: 'header',
+            type: 'string',
+            required: true,
+            description: 'Bearer token'
+        }
+     * #swagger.parameters['body'] = {
             in: 'formData',
             name: 'image',
             type: 'file',

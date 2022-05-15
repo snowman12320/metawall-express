@@ -3,10 +3,16 @@ const router = express.Router();
 const posts = require('../controllers/posts');
 const { checkAuth, generateSendJWT } = require('../service/auth');
 
-router.get('', (req, res, next) => {
+router.get('', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Posts']
      * #swagger.description = '取得全部貼文'
+     * #swagger.parameters['Authorization'] = {
+            in: 'header',
+            type: 'string',
+            required: true,
+            description: 'Bearer token'
+        }
      * #swagger.parameters['sort'] = {
             in: 'query',
             type: 'string',
@@ -43,6 +49,12 @@ router.post('', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Posts']
      * #swagger.description = '新增單一貼文'
+     * #swagger.parameters['Authorization'] = {
+            in: 'header',
+            type: 'string',
+            required: true,
+            description: 'Bearer token'
+        }
      * #swagger.parameters['body'] = {
             in: 'body',
             type: 'object',
@@ -111,7 +123,7 @@ router.delete('/:id', (req, res, next) => {
     posts.deleteSingleData(req, res, next);
 });
 
-router.patch('/:id', checkAuth, (req, res, next) => {
+router.patch('/:id', (req, res, next) => {
     /**
      * #swagger.tags = ['Posts']
      * #swagger.description = '編輯單一貼文'
