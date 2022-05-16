@@ -66,9 +66,17 @@ const resErrorDev = (error, res) => {
     });
 }
 
-// 錯誤處理
+// JSON 格式錯誤
 app.use((error, req, res, next) => {
     error.statusCode = error.statusCode || 500;
+    if (error instanceof SyntaxError && 'body' in error) {
+        return errorHandler(res, error.message, error.statusCode);
+    }
+    next(error);
+});
+
+// 自訂錯誤處理
+app.use((error, req, res, next) => {
     // dev
     if (process.env.NODE_ENV === 'develop') {
         return resErrorDev(error, res);
