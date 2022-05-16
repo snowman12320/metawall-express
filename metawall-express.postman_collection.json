@@ -1,207 +1,442 @@
 {
 	"info": {
-		"_postman_id": "c7b2e719-817e-4912-be2a-1b97788c8303",
+		"_postman_id": "8392f631-9905-442b-9908-184a22c1dfeb",
 		"name": "metawall-express",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Get",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "https://peaceful-citadel-43202.herokuapp.com/posts?keyword=&sort=desc",
-					"protocol": "https",
-					"host": [
-						"peaceful-citadel-43202",
-						"herokuapp",
-						"com"
-					],
-					"path": [
-						"posts"
-					],
-					"query": [
-						{
-							"key": "keyword",
-							"value": ""
+			"name": "Posts",
+			"item": [
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2U4YzZiN2MzNjUyYzNlMWE1ODI2MSIsImlhdCI6MTY1MjUzNjQzMiwiZXhwIjoxNjUzMTQxMjMyfQ.yI_mCoq7THbDhVN2w3lla-rt6aDTn1vlBNoPYESjY78",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://peaceful-citadel-43202.herokuapp.com/api/v1/posts?keyword=&sort=desc&name=",
+							"protocol": "https",
+							"host": [
+								"peaceful-citadel-43202",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"posts"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": ""
+								},
+								{
+									"key": "sort",
+									"value": "desc"
+								},
+								{
+									"key": "name",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2U4YzZiN2MzNjUyYzNlMWE1ODI2MSIsImlhdCI6MTY1MjUzNjQzMiwiZXhwIjoxNjUzMTQxMjMyfQ.yI_mCoq7THbDhVN2w3lla-rt6aDTn1vlBNoPYESjY78",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"\",\n    \"image\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
-						{
-							"key": "sort",
-							"value": "desc"
+						"url": {
+							"raw": "https://peaceful-citadel-43202.herokuapp.com/api/v1/posts",
+							"protocol": "https",
+							"host": [
+								"peaceful-citadel-43202",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"posts"
+							]
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Post",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"user\": \"627bb1b4d6eb1a208ca52b4a\",\n    \"content\": \"這是我的貼文內容\",\n    \"image\": \"\",\n    \"likes\": 20000\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "https://peaceful-citadel-43202.herokuapp.com/posts",
-					"protocol": "https",
-					"host": [
-						"peaceful-citadel-43202",
-						"herokuapp",
-						"com"
-					],
-					"path": [
-						"posts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "DeleteAll",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "DeleteAll",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://peaceful-citadel-43202.herokuapp.com/api/v1/posts",
+							"protocol": "https",
+							"host": [
+								"peaceful-citadel-43202",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"posts"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "https://peaceful-citadel-43202.herokuapp.com/posts",
-					"protocol": "https",
-					"host": [
-						"peaceful-citadel-43202",
-						"herokuapp",
-						"com"
-					],
-					"path": [
-						"posts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "DeleteSingle",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "DeleteSingle",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://peaceful-citadel-43202.herokuapp.com/api/v1/posts/62808470a48dd61b3b46e0ff",
+							"protocol": "https",
+							"host": [
+								"peaceful-citadel-43202",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"posts",
+								"62808470a48dd61b3b46e0ff"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "https://peaceful-citadel-43202.herokuapp.com/posts/627ba81fd5169f2106357262",
-					"protocol": "https",
-					"host": [
-						"peaceful-citadel-43202",
-						"herokuapp",
-						"com"
-					],
-					"path": [
-						"posts",
-						"627ba81fd5169f2106357262"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Patch",
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"content\": \"測試測試測試\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Patch",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2JiZWUwZDAwZDc1ZDQ2NzhjZjVmNSIsImlhdCI6MTY1MjI3ODEyMSwiZXhwIjoxNjUyODgyOTIxfQ.gmaXHzAwCmjKhLmwvcnuLJq_QWfXJqHhm26dEJGnPr8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"haloa\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:3005/api/v1/posts/628084c1a48dd61b3b46e104",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3005",
+							"path": [
+								"api",
+								"v1",
+								"posts",
+								"628084c1a48dd61b3b46e104"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "https://peaceful-citadel-43202.herokuapp.com/posts/627ba82fd5169f2106357266",
-					"protocol": "https",
-					"host": [
-						"peaceful-citadel-43202",
-						"herokuapp",
-						"com"
-					],
-					"path": [
-						"posts",
-						"627ba82fd5169f2106357266"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "GetUsers",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "https://peaceful-citadel-43202.herokuapp.com/users",
-					"protocol": "https",
-					"host": [
-						"peaceful-citadel-43202",
-						"herokuapp",
-						"com"
-					],
-					"path": [
-						"users"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "PostFile",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "image",
-							"type": "file",
-							"src": "/Users/clairechang/Desktop/測試用圖片/A.png"
+			"name": "Files",
+			"item": [
+				{
+					"name": "Post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2JiZWUwZDAwZDc1ZDQ2NzhjZjVmNSIsImlhdCI6MTY1MjI3ODEyMSwiZXhwIjoxNjUyODgyOTIxfQ.gmaXHzAwCmjKhLmwvcnuLJq_QWfXJqHhm26dEJGnPr8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/Users/clairechang/Desktop/測試用圖片/picture.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://peaceful-citadel-43202.herokuapp.com/api/v1/files",
+							"protocol": "https",
+							"host": [
+								"peaceful-citadel-43202",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"files"
+							]
 						}
-					]
-				},
-				"url": {
-					"raw": "https://peaceful-citadel-43202.herokuapp.com/files",
-					"protocol": "https",
-					"host": [
-						"peaceful-citadel-43202",
-						"herokuapp",
-						"com"
-					],
-					"path": [
-						"files"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"王小明v1\",\n    \"email\": \"hello@hotmail.com\",\n    \"password\": \"112233445\",\n    \"confirmPassword\": \"112233445\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://peaceful-citadel-43202.herokuapp.com/api/v1/users/register",
+							"protocol": "https",
+							"host": [
+								"peaceful-citadel-43202",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"hello123@hotmail.com\",\n    \"password\": \"112233445\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://peaceful-citadel-43202.herokuapp.com/api/v1/users/login",
+							"protocol": "https",
+							"host": [
+								"peaceful-citadel-43202",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdatePassword",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODA4NTYwYTQ4ZGQ2MWIzYjQ2ZTExNyIsImlhdCI6MTY1MjU4OTk0MywiZXhwIjoxNjUzMTk0NzQzfQ.LlNnwTELVYWvtJ_TqUH2RlcYvj_ty2d7tpb6Urm7XYE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"112233445\",\n    \"confirmPassword\": \"112233445\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://peaceful-citadel-43202.herokuapp.com/api/v1/users/update_password",
+							"protocol": "https",
+							"host": [
+								"peaceful-citadel-43202",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"update_password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOwnProfile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODA4NTYwYTQ4ZGQ2MWIzYjQ2ZTExNyIsImlhdCI6MTY1MjU4OTk0MywiZXhwIjoxNjUzMTk0NzQzfQ.LlNnwTELVYWvtJ_TqUH2RlcYvj_ty2d7tpb6Urm7XYE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://peaceful-citadel-43202.herokuapp.com/api/v1/users/profile",
+							"protocol": "https",
+							"host": [
+								"peaceful-citadel-43202",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProfileByName",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODA4NTYwYTQ4ZGQ2MWIzYjQ2ZTExNyIsImlhdCI6MTY1MjU4OTk0MywiZXhwIjoxNjUzMTk0NzQzfQ.LlNnwTELVYWvtJ_TqUH2RlcYvj_ty2d7tpb6Urm7XYE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://peaceful-citadel-43202.herokuapp.com/api/v1/users/profile/王小明",
+							"protocol": "https",
+							"host": [
+								"peaceful-citadel-43202",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"profile",
+								"王小明"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateProfile",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODA4NTYwYTQ4ZGQ2MWIzYjQ2ZTExNyIsImlhdCI6MTY1MjU4OTk0MywiZXhwIjoxNjUzMTk0NzQzfQ.LlNnwTELVYWvtJ_TqUH2RlcYvj_ty2d7tpb6Urm7XYE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"王小明v2\",\n    \"photo\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://peaceful-citadel-43202.herokuapp.com/api/v1/users/profile",
+							"protocol": "https",
+							"host": [
+								"peaceful-citadel-43202",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
