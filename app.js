@@ -11,7 +11,7 @@ const filesRouter = require('./routes/files');
 const postsRouter = require('./routes/posts');
 const usersRouter = require('./routes/users');
 const app = express();
-const history = require('connect-history-api-fallback');
+// const history = require('connect-history-api-fallback');
 
 // 程式出現重大錯誤時
 process.on('uncaughtException', error => {
@@ -38,9 +38,7 @@ app.use('/api/v1/files', filesRouter);
 app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/posts', postsRouter);
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
-app.use(history({
-    verbose: true
-}));
+// app.use(history());
 
 // 404
 app.use((req, res, next) => {
