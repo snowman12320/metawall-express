@@ -38,6 +38,9 @@ app.use('/api/v1/files', filesRouter);
 app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/posts', postsRouter);
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
+app.use(history({
+    verbose: true
+}));
 
 // 404
 app.use((req, res, next) => {
@@ -94,7 +97,5 @@ app.use((error, req, res, next) => {
 process.on('unhandledRejection', (error, promise) => {
     console.log('未捕捉到的 rejection：', promise, '原因：', error);
 })
-
-app.use(history());
 
 module.exports = app;
