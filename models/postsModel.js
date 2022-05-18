@@ -20,10 +20,12 @@ const postSchema = new mongoose.Schema(
             default: Date.now, // 即時更新
             select: true
         },
-        likes: {
-            type: Number,
-            default: 0
-        }
+        likes: [
+            {
+                type: mongoose.Schema.ObjectId,
+                ref: 'User'
+            }
+        ]
     },
     {
         versionKey: false

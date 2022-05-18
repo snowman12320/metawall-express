@@ -47,8 +47,8 @@ const posts = {
         }
     }),
     patchData: handleErrorAsync (async (req, res, next) => {
-        const { content, image, likes } = req.body;
-        const data = { content, image, likes };
+        const { content, image } = req.body;
+        const data = { content, image };
         if (!data.content) {
             return appError("更新失敗，貼文內容必填", 400, next);
         } else {
@@ -64,6 +64,36 @@ const posts = {
                 successHandler(res, "更新成功", post);
             }
         }
+    }),
+    patchLike: handleErrorAsync (async (req, res, next) => {
+        const userId = req.user.id; // 登入者
+        const postId = req.params.id;
+        const findPost = await Post.findById(postId);
+        if (!findPost) {
+            return appError("更新失敗，查無此貼文", 400, next);
+        }
+        if (findPost.likes.includes(userId)) {
+            await Post.findByIdAndUpdate(
+                postId,
+                { $pull: { likes: userId } }
+            );
+        } else {
+            await Post.findByIdAndUpdate(
+                postId,
+                { $push: { likes: userId } }
+            );
+        }
+        successHandler(res, "更新成功");
+    }),
+    getLikePosts: handleErrorAsync (async (req, res, next) => {
+        const userId = req.user.id; // 登入者
+        const posts = await Post.find({ likes: { $in: userId } })
+            .populate({ 
+                path: 'user',
+                select: 'name photo'
+            })
+            .sort('-createdAt');
+        successHandler(res, "取得成功", posts);
     })
 }
 

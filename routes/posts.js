@@ -3,6 +3,7 @@ const router = express.Router();
 const posts = require('../controllers/posts');
 const { checkAuth, generateSendJWT } = require('../service/auth');
 
+// 取得所有貼文
 router.get('', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Posts']
@@ -45,6 +46,7 @@ router.get('', checkAuth, (req, res, next) => {
     posts.getData(req, res, next);
 });
 
+// 新增貼文
 router.post('', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Posts']
@@ -87,6 +89,7 @@ router.post('', checkAuth, (req, res, next) => {
     posts.postData(req, res, next);
 });
 
+// 刪除所有貼文
 router.delete('', (req, res, next) => {
     /**
      * #swagger.tags = ['Posts']
@@ -102,6 +105,7 @@ router.delete('', (req, res, next) => {
     posts.deleteAllData(req, res, next);
 });
 
+// 刪除單篇貼文
 router.delete('/:id', (req, res, next) => {
     /**
      * #swagger.tags = ['Posts']
@@ -123,6 +127,7 @@ router.delete('/:id', (req, res, next) => {
     posts.deleteSingleData(req, res, next);
 });
 
+// 編輯貼文
 router.patch('/:id', (req, res, next) => {
     /**
      * #swagger.tags = ['Posts']
@@ -163,6 +168,16 @@ router.patch('/:id', (req, res, next) => {
         }
      */
     posts.patchData(req, res, next);
+});
+
+// 按讚/收回讚
+router.patch('/likes/:id', checkAuth, (req, res, next) => {
+    posts.patchLike(req, res, next);
+});
+
+// 取得所有按讚貼文
+router.get('/likes', checkAuth, (req, res, next) => {
+    posts.getLikePosts(req, res, next);
 });
 
 module.exports = router;
