@@ -8,7 +8,6 @@ const Message = require('../models/messagesModel');
 
 const posts = {
     getData: handleErrorAsync(async (req, res, next) => {
-        console.log('get');
         const { keyword, sort } = req.query;
         const dateSort = sort === 'desc' ? '-createdAt' : 'createdAt';
         const posts = await Post.find({ content: { $regex: keyword || '' } })
