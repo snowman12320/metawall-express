@@ -208,6 +208,16 @@ router.get('/likes', checkAuth, (req, res, next) => {
     users.getLikePosts(req, res, next);
 });
 
+// 新增追蹤用戶
+router.post('/:id/follow', checkAuth, (req, res, next) => {
+    users.postFollow(req, res, next);
+});
+
+// 刪除追蹤用戶
+router.delete('/:id/follow', checkAuth, (req, res, next) => {
+    users.deleteFollow(req, res, next);
+});
+
 // 取得所有追蹤用戶
 router.get('/following', checkAuth, (req, res, next) => {
     users.getFollowing(req, res, next);

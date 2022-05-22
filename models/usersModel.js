@@ -24,10 +24,33 @@ const userSchema = new mongoose.Schema(
             minlength: 8,
             select: false
         },
+        followers: [
+            {
+                user: {
+                    type: mongoose.Schema.ObjectId,
+                    ref: 'User', // 連接到 User collection
+                },
+                createdAt: {
+                    type: Date,
+                    default: Date.now, // 即時更新
+                }
+            }
+        ],
+        following: [
+            {
+                user: {
+                    type: mongoose.Schema.ObjectId,
+                    ref: 'User', // 連接到 User collection
+                },
+                createdAt: {
+                    type: Date,
+                    default: Date.now, // 即時更新
+                }
+            }
+        ],
         createdAt: {
             type: Date,
             default: Date.now, // 即時更新
-            select: false
         }
     },
     {

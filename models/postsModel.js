@@ -21,10 +21,10 @@ const postSchema = new mongoose.Schema(
                 ref: 'User'
             }
         ],
-        messages: [
+        comments: [
             {
                 type: mongoose.Schema.ObjectId,
-                ref: 'Message'
+                ref: 'Comment'
             }
         ],
         createdAt: {

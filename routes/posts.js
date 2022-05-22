@@ -185,4 +185,9 @@ router.patch('/:id/likes', checkAuth, (req, res, next) => {
     posts.patchLike(req, res, next);
 });
 
+// 新增留言
+router.post('/:id/comments', checkAuth, (req, res, next) => {
+    posts.postComment(req, res, next);
+});
+
 module.exports = router;

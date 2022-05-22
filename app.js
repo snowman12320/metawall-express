@@ -9,9 +9,8 @@ const swaggerUI = require('swagger-ui-express');
 const swaggerFile = require('./swagger-output.json');
 const filesRouter = require('./routes/files');
 const postsRouter = require('./routes/posts');
-const messagesRouter = require('./routes/messages');
+const commentsRouter = require('./routes/comments');
 const usersRouter = require('./routes/users');
-const followsRouter = require('./routes/follows');
 const app = express();
 // const history = require('connect-history-api-fallback');
 
@@ -39,8 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/v1/files', filesRouter);
 app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/posts', postsRouter);
-app.use('/api/v1/messages', messagesRouter);
-app.use('/api/v1/follows', followsRouter);
+app.use('/api/v1/comments', commentsRouter);
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
 // app.use(history());
 

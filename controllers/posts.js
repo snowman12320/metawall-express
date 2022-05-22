@@ -3,8 +3,7 @@ const appError = require('../service/appError');
 const handleErrorAsync = require('../service/handleErrorAsync');
 const checkObjectId = require('../service/validation');
 const Post = require('../models/postsModel');
-const User = require('../models/usersModel');
-const Message = require('../models/messagesModel');
+const Comment = require('../models/commentsModel');
 
 const posts = {
     getData: handleErrorAsync(async (req, res, next) => {
@@ -17,11 +16,7 @@ const posts = {
                     select: 'name photo' // 取出相關聯 collection name & photo
                 },
                 { 
-                    path: 'messages',
-                    populate: { 
-                        path: 'user',
-                        select: 'name photo'
-                    },
+                    path: 'comments',
                     options: { sort: '-createdAt' }
                 }
             ])
@@ -43,11 +38,7 @@ const posts = {
                     select: 'name photo' // 取出相關聯 collection name & photo
                 },
                 { 
-                    path: 'messages',
-                    populate: { 
-                        path: 'user',
-                        select: 'name photo'
-                    },
+                    path: 'comments',
                     options: { sort: '-createdAt' }
                 }
             ])
@@ -64,11 +55,7 @@ const posts = {
                     select: 'name photo' // 取出相關聯 collection name & photo
                 },
                 { 
-                    path: 'messages',
-                    populate: { 
-                        path: 'user',
-                        select: 'name photo'
-                    },
+                    path: 'comments',
                     options: { sort: '-createdAt' }
                 }
             ])
@@ -146,6 +133,42 @@ const posts = {
         }
         const updatePost = await Post.findById(postId);
         successHandler(res, "更新成功", updatePost);
+    }),
+    postComment: handleErrorAsync (async (req, res, next) => {
+        const user = req.user.id; // 登入者
+        const post = req.params.id;
+        const { content } = req.body;
+        // 檢查內容是否填寫
+        if (!content) {
+            return appError('貼文內容必填', 400, next);
+        }
+        checkObjectId(post, next);
+        // 檢查有無貼文
+        const findPost = await Post.findById(post);
+        if (!findPost) {
+            return appError("新增失敗，查無此貼文", 400, next);
+        }
+        const data = { user, content, post };
+        const message = await Comment.create(data);
+        await Post.findByIdAndUpdate(post, {
+            $push: { comments: [ message._id ] }
+        });
+        const getPost = await Post.findById(post)
+            .populate([
+                { 
+                    path: 'user', // post 內 user 欄位
+                    select: 'name photo' // 取出相關聯 collection name & photo
+                },
+                { 
+                    path: 'comments',
+                    populate: { 
+                        path: 'user',
+                        select: 'name photo'
+                    },
+                    options: { sort: '-createdAt' }
+                }
+            ]);
+        successHandler(res, "新增成功", getPost);
     })
 }
 

@@ -1,11 +1,16 @@
 const mongoose = require('mongoose');
 
-const messageSchema = new mongoose.Schema(
+const commentSchema = new mongoose.Schema(
     {
         user: {
             type: mongoose.Schema.ObjectId,
-            ref: 'User', // 連接到 User collection
+            ref: 'User', // 連接到 collection
             required: [ true, 'user id 未填寫' ]
+        },
+        post: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'Post',
+            required: [ true, '貼文 id 必填' ]
         },
         content: {
             type: String,
@@ -26,7 +31,16 @@ const messageSchema = new mongoose.Schema(
     {
         versionKey: false
     }
-)
-const Message = mongoose.model('Message', messageSchema);
+);
 
-module.exports = Message;
+commentSchema.pre(/^find/, function(next) {
+    this.populate({
+        path: 'user',
+        select: 'name photo'
+    });
+    next();
+});
+
+const Comment = mongoose.model('Comment', commentSchema);
+
+module.exports = Comment;

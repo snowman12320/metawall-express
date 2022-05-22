@@ -5,7 +5,6 @@ const bcrypt = require('bcryptjs'); // 密碼加密
 const validator = require('validator'); // 格式驗證
 const User = require('../models/usersModel');
 const Post = require('../models/postsModel');
-const Follow = require('../models/followsModel');
 const { checkAuth, generateSendJWT } = require('../service/auth');
 const checkObjectId = require('../service/validation');
 const dotenv = require('dotenv');
@@ -61,15 +60,18 @@ const users = {
         successHandler(res, "取得成功", req.user);
     }),
     getProfileById: handleErrorAsync(async (req, res, next) => {
-        const id = req.params.id;
-        checkObjectId(id, next);
-        const findUser = await User.findById(id);
+        const userId = req.params.id;
+        checkObjectId(userId, next);
+        const findUser = await User.findById(userId);
         if (!findUser) {
             return appError('查無使用者', 400, next);
         }
-        const { name, photo } = findUser;
-        const followers = await (await Follow.find({ following: id })).length; // 追蹤者數
-        const findFollow = await Follow.findOne({ user: req.user.id, following: id });
+        let { name, photo, followers } = findUser;
+        followers = followers.length; // 追蹤者數
+        const findFollow = await User.findOne({
+            _id: req.user.id,
+            'following.user': { $in: userId }
+        });
         const isFollow = Boolean(findFollow); // 是否追蹤
         successHandler(res, "取得成功", { name, photo, followers, isFollow });
     }),
@@ -111,7 +113,63 @@ const users = {
             })
             .sort('-createdAt');
         successHandler(res, "取得成功", posts);
-    })
+    }),
+    postFollow: handleErrorAsync(async (req, res, next) => {
+        const user = req.user.id;
+        const following = req.params.id;
+        if (user === following) {
+            return appError("不可以追蹤自己歐！", 401, next);
+        }
+        checkObjectId(following, next);
+        const findFollow = await User.findOne({
+            _id: user,
+            'following.user': { $in: following }
+        });
+        if (findFollow) {
+            return appError("您已追蹤此用戶", 400, next);
+        }
+        // 增加追蹤用戶
+        await User.findByIdAndUpdate(user, {
+            $addToSet: { following: { user: following } }
+        });
+        await User.findByIdAndUpdate(following, {
+            $addToSet: { followers: { user: user } }
+        });
+        successHandler(res, "追蹤成功");
+    }),
+    deleteFollow: handleErrorAsync (async (req, res, next) => {
+        const user = req.user.id;
+        const following = req.params.id;
+        checkObjectId(following, next);
+        const findFollow = await User.findOne({
+            _id: user,
+            'following.user': { $in: following }
+        });
+        if (!findFollow) {
+            return appError("您尚未追蹤此用戶", 400, next);
+        }
+        // 移除追蹤用戶
+        await User.findByIdAndUpdate(user, {
+            $pull: { following: { user: following } }
+        });
+        await User.findByIdAndUpdate(following, {
+            $pull: { followers: { user: user } }
+        });
+        successHandler(res, "取消追蹤成功");
+    }),
+    getFollowing: handleErrorAsync(async (req, res, next) => {
+        const user = await User.findById(req.user.id)
+            .populate({
+                path: 'following',
+                populate: { 
+                    path: 'user',
+                    select: 'name photo'
+                },
+                options: { sort: '-createdAt' }
+            })
+        console.log(user);
+        successHandler(res, "取得成功", user.following);
+    }),
 }
 
 module.exports = users;
