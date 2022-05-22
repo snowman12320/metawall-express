@@ -46,6 +46,16 @@ router.get('', checkAuth, (req, res, next) => {
     posts.getData(req, res, next);
 });
 
+// 取得個人貼文
+router.get('/user/:userId', checkAuth, (req, res, next) => {
+    posts.getUserData(req, res, next);
+});
+
+// 取得單一貼文
+router.get('/:id', checkAuth, (req, res, next) => {
+    posts.getSingleData(req, res, next);
+});
+
 // 新增貼文
 router.post('', checkAuth, (req, res, next) => {
     /**
@@ -171,13 +181,8 @@ router.patch('/:id', (req, res, next) => {
 });
 
 // 按讚/收回讚
-router.patch('/likes/:id', checkAuth, (req, res, next) => {
+router.patch('/:id/likes', checkAuth, (req, res, next) => {
     posts.patchLike(req, res, next);
-});
-
-// 取得所有按讚貼文
-router.get('/likes', checkAuth, (req, res, next) => {
-    posts.getLikePosts(req, res, next);
 });
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const postSchema = new mongoose.Schema(
+const messageSchema = new mongoose.Schema(
     {
         user: {
             type: mongoose.Schema.ObjectId,
@@ -9,22 +9,12 @@ const postSchema = new mongoose.Schema(
         },
         content: {
             type: String,
-            required: [ true, '貼文內容未填寫' ]
-        },
-        image: {
-            type: String,
-            default: ''
+            required: [ true, '留言內容未填寫' ]
         },
         likes: [
             {
                 type: mongoose.Schema.ObjectId,
                 ref: 'User'
-            }
-        ],
-        messages: [
-            {
-                type: mongoose.Schema.ObjectId,
-                ref: 'Message'
             }
         ],
         createdAt: {
@@ -37,6 +27,6 @@ const postSchema = new mongoose.Schema(
         versionKey: false
     }
 )
-const Post = mongoose.model('Post', postSchema);
+const Message = mongoose.model('Message', messageSchema);
 
-module.exports = Post;
+module.exports = Message;

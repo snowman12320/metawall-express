@@ -3,6 +3,7 @@ const router = express.Router();
 const users = require('../controllers/users');
 const { checkAuth, generateSendJWT } = require('../service/auth');
 
+// 註冊
 router.post('/register', (req, res, next) => {
     /**
      * #swagger.tags = ['Users']
@@ -31,6 +32,7 @@ router.post('/register', (req, res, next) => {
     users.register(req, res, next);
 });
 
+// 登入
 router.post('/login', (req, res, next) => {
     /**
      * #swagger.tags = ['Users']
@@ -63,6 +65,7 @@ router.post('/login', (req, res, next) => {
     users.login(req, res, next);
 });
 
+// 取得登入者個人資訊
 router.get('/profile', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Users']
@@ -90,7 +93,8 @@ router.get('/profile', checkAuth, (req, res, next) => {
     users.getOwnProfile(req, res, next);
 });
 
-router.get('/profile/:name', checkAuth, (req, res, next) => {
+// 透過 id 取得個人資訊
+router.get('/profile/:id', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Users']
      * #swagger.description = '查看其他用戶資訊'
@@ -100,11 +104,11 @@ router.get('/profile/:name', checkAuth, (req, res, next) => {
             required: true,
             description: 'Bearer token'
         }
-     * #swagger.parameters['name'] = {
+     * #swagger.parameters['id'] = {
             in: 'path',
             type: 'string',
             required: true,
-            description: '用戶姓名'
+            description: '用戶id'
         }
      * #swagger.responses[200] = {
             description: 'user 資訊',
@@ -118,9 +122,10 @@ router.get('/profile/:name', checkAuth, (req, res, next) => {
             }
         }
      */
-    users.getProfileByName(req, res, next);
+    users.getProfileById(req, res, next);
 });
 
+// 編輯登入者個人資訊
 router.patch('/profile', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Users']
@@ -159,6 +164,7 @@ router.patch('/profile', checkAuth, (req, res, next) => {
     users.patchProfile(req, res, next);
 });
 
+// 編輯密碼
 router.patch('/update_password', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Users']
@@ -195,6 +201,16 @@ router.patch('/update_password', checkAuth, (req, res, next) => {
         }
      */
     users.updatePassword(req, res, next);
+});
+
+// 取得所有按讚貼文
+router.get('/likes', checkAuth, (req, res, next) => {
+    users.getLikePosts(req, res, next);
+});
+
+// 取得所有追蹤用戶
+router.get('/following', checkAuth, (req, res, next) => {
+    users.getFollowing(req, res, next);
 });
 
 module.exports = router;

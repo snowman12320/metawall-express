@@ -34,6 +34,7 @@ const generateSendJWT = (res, message, user) => {
     const data = {
         token,
         profile: {
+            _id: user._id,
             name: user.name,
             photo: user.photo
         }
