@@ -32,12 +32,16 @@ router.get('', checkAuth, (req, res, next) => {
                 status: 'success',
                 message: '取得成功',
                 data: [{
-                    name: '王小明',
-                    photo: 'aaa.jpg',
-                    content: '這是我的貼文內容',
-                    image: 'bbb.jpg',
-                    likes: 20000,
                     _id: '6276252a59d61d0687896756',
+                    user: {
+                        _id: '628a3f7bfd8374422f6af95e',
+                        name: '王小明',
+                        photo: ''
+                    },
+                    content: '這是我的貼文歐',
+                    image: 'bbb.jpg',
+                    likes: [],
+                    comments: [],
                     createdAt: '2022-05-07T07:52:10.937Z'
                 }]
             }
@@ -46,13 +50,97 @@ router.get('', checkAuth, (req, res, next) => {
     posts.getData(req, res, next);
 });
 
-// 取得個人貼文
+// 取得特定用戶的貼文
 router.get('/user/:userId', checkAuth, (req, res, next) => {
+    /**
+     * #swagger.tags = ['Posts']
+     * #swagger.description = '取得特定用戶的貼文'
+     * #swagger.parameters['Authorization'] = {
+            in: 'header',
+            type: 'string',
+            required: true,
+            description: 'Bearer token'
+        }
+     * #swagger.parameters['sort'] = {
+            in: 'query',
+            type: 'string',
+            required: false,
+            description: '排序：desc/asc'
+        }
+     * #swagger.parameters['keyword'] = {
+            in: 'query',
+            type: 'string',
+            required: false,
+            description: '關鍵字搜尋'
+        }
+     * #swagger.parameters['userId'] = {
+            in: 'path',
+            type: 'string',
+            required: true,
+            description: 'user id'
+        }
+     * #swagger.responses[200] = {
+            description: '貼文資訊',
+            schema: {
+                status: 'success',
+                message: '取得成功',
+                data: [{
+                    _id: '6276252a59d61d0687896756',
+                    user: {
+                        _id: '628a3f7bfd8374422f6af95e',
+                        name: '王小明',
+                        photo: ''
+                    },
+                    content: '這是我的貼文歐',
+                    image: 'bbb.jpg',
+                    likes: [],
+                    comments: [],
+                    createdAt: '2022-05-07T07:52:10.937Z'
+                }]
+            }
+        }
+     */
     posts.getUserData(req, res, next);
 });
 
-// 取得單一貼文
+// 取得單筆貼文
 router.get('/:id', checkAuth, (req, res, next) => {
+    /**
+     * #swagger.tags = ['Posts']
+     * #swagger.description = '取得單筆貼文'
+     * #swagger.parameters['Authorization'] = {
+            in: 'header',
+            type: 'string',
+            required: true,
+            description: 'Bearer token'
+        }
+     * #swagger.parameters['id'] = {
+            in: 'path',
+            type: 'string',
+            required: true,
+            description: '貼文 id'
+        }
+     * #swagger.responses[200] = {
+            description: '貼文資訊',
+            schema: {
+                status: 'success',
+                message: '取得成功',
+                data: {
+                    _id: '6276252a59d61d0687896756',
+                    user: {
+                        _id: '628a3f7bfd8374422f6af95e',
+                        name: '王小明',
+                        photo: ''
+                    },
+                    content: '這是我的貼文歐',
+                    image: 'bbb.jpg',
+                    likes: [],
+                    comments: [],
+                    createdAt: '2022-05-07T07:52:10.937Z'
+                }
+            }
+        }
+     */
     posts.getSingleData(req, res, next);
 });
 
@@ -60,7 +148,7 @@ router.get('/:id', checkAuth, (req, res, next) => {
 router.post('', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Posts']
-     * #swagger.description = '新增單一貼文'
+     * #swagger.description = '新增單筆貼文'
      * #swagger.parameters['Authorization'] = {
             in: 'header',
             type: 'string',
@@ -73,10 +161,8 @@ router.post('', checkAuth, (req, res, next) => {
             required: true,
             description: '資料格式',
             schema: {
-                $user: '626c14b5fdb48b9d205ef262',
-                $content: '這是我的貼文內容',
-                image: 'bbb.jpg',
-                likes: 300
+                $content: '這是我的貼文歐',
+                image: 'bbb.jpg'
             }
         }
      * #swagger.responses[200] = {
@@ -85,13 +171,13 @@ router.post('', checkAuth, (req, res, next) => {
                 status: 'success',
                 message: '取得成功',
                 data: {
-                    name: '王小明',
-                    photo: 'aaa.jpg',
-                    content: '這是我的貼文內容',
+                    user: '628a3f7bfd8374422f6af95e',
+                    content: '這是我的貼文歐',
                     image: 'bbb.jpg',
-                    likes: 20000,
-                    _id: '6276252a59d61d0687896756',
-                    createdAt: '2022-05-07T07:52:10.937Z'
+                    likes: [],
+                    comments: [],
+                    _id: '628b8d05e2d52948f5bb8b81',
+                    createdAt: '2022-05-23T13:32:53.653Z'
                 }
             }
         }
@@ -115,11 +201,11 @@ router.delete('', (req, res, next) => {
     posts.deleteAllData(req, res, next);
 });
 
-// 刪除單篇貼文
+// 刪除單筆貼文
 router.delete('/:id', (req, res, next) => {
     /**
      * #swagger.tags = ['Posts']
-     * #swagger.description = '刪除單一貼文'
+     * #swagger.description = '刪除單筆貼文'
      * #swagger.parameters['id'] = {
             in: 'path',
             type: 'string',
@@ -137,11 +223,11 @@ router.delete('/:id', (req, res, next) => {
     posts.deleteSingleData(req, res, next);
 });
 
-// 編輯貼文
+// 編輯單筆貼文
 router.patch('/:id', (req, res, next) => {
     /**
      * #swagger.tags = ['Posts']
-     * #swagger.description = '編輯單一貼文'
+     * #swagger.description = '編輯單筆貼文'
      * #swagger.parameters['id'] = {
             in: 'path',
             type: 'string',
@@ -154,10 +240,8 @@ router.patch('/:id', (req, res, next) => {
             required: true,
             description: '資料格式',
             schema: {
-                $user: '626c14b5fdb48b9d205ef262',
-                $content: '這是我的貼文內容',
-                image: 'bbb.jpg',
-                likes: 300
+                $content: 'aloha',
+                image: 'bbb.jpg'
             }
         }
      * #swagger.responses[200] = {
@@ -166,13 +250,17 @@ router.patch('/:id', (req, res, next) => {
                 status: 'success',
                 message: '更新成功',
                 data: {
-                    name: '王小明',
-                    photo: 'aaa.jpg',
-                    content: '這是我的貼文內容',
+                    _id: '628b8d05e2d52948f5bb8b81',
+                    user: {
+                        _id: '628a3f7bfd8374422f6af95e',
+                        name: '王小明',
+                        photo: ''
+                    },
+                    content: 'aloha',
                     image: 'bbb.jpg',
-                    likes: 20000,
-                    _id: '6276252a59d61d0687896756',
-                    createdAt: '2022-05-07T07:52:10.937Z'
+                    likes: [],
+                    comments: [],
+                    createdAt: '2022-05-23T13:32:53.653Z'
                 }
             }
         }
@@ -180,13 +268,99 @@ router.patch('/:id', (req, res, next) => {
     posts.patchData(req, res, next);
 });
 
-// 按讚/收回讚
+// 貼文按讚/收回讚
 router.patch('/:id/likes', checkAuth, (req, res, next) => {
+    /**
+     * #swagger.tags = ['Posts']
+     * #swagger.description = '貼文按讚/收回讚'
+     * #swagger.parameters['Authorization'] = {
+            in: 'header',
+            type: 'string',
+            required: true,
+            description: 'Bearer token'
+        }
+     * #swagger.parameters['id'] = {
+            in: 'path',
+            type: 'string',
+            required: true,
+            description: '貼文 id'
+        }
+     * #swagger.responses[200] = {
+            description: '貼文資訊',
+            schema: {
+                status: 'success',
+                message: '更新成功',
+                data: {
+                    _id: '628b89e27bb3be30ae6e0656',
+                    user: '628a3f7bfd8374422f6af95e',
+                    content: '嗨你好',
+                    image: '',
+                    likes: [
+                        '628a3f7bfd8374422f6af95e'
+                    ],
+                    comments: [],
+                    createdAt: '2022-05-23T13:19:30.054Z'
+                }
+            }
+        }
+     */
     posts.patchLike(req, res, next);
 });
 
 // 新增留言
 router.post('/:id/comments', checkAuth, (req, res, next) => {
+    /**
+     * #swagger.tags = ['Posts']
+     * #swagger.description = '新增留言'
+     * #swagger.parameters['Authorization'] = {
+            in: 'header',
+            type: 'string',
+            required: true,
+            description: 'Bearer token'
+        }
+     * #swagger.parameters['body'] = {
+            in: 'body',
+            type: 'object',
+            required: true,
+            description: '資料格式',
+            schema: {
+                $content: '我來留言囉'
+            }
+        }
+     * #swagger.responses[200] = {
+            description: '貼文資訊',
+            schema: {
+                status: 'success',
+                message: '新增成功',
+                data: {
+                    _id: '628b89e27bb3be30ae6e0656',
+                    user: {
+                        _id: '628a3f7bfd8374422f6af95e',
+                        name: '王小明',
+                        photo: ''
+                    },
+                    content: '這是我的貼文歐',
+                    image: '',
+                    likes: [],
+                    comments: [
+                        {
+                            _id: '628b89fd7bb3be30ae6e065d',
+                            user: {
+                                _id: '628a3f7bfd8374422f6af95e',
+                                name: '漂亮阿姨',
+                                photo: ''
+                            },
+                            post: '628b89e27bb3be30ae6e0656',
+                            content: '歐是歐',
+                            likes: [],
+                            createdAt: '2022-05-23T13:19:57.910Z'
+                        }
+                    ],
+                    createdAt: '2022-05-23T13:19:30.054Z'
+                }
+            }
+        }
+     */
     posts.postComment(req, res, next);
 });
 

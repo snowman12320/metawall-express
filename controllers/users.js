@@ -97,8 +97,12 @@ const users = {
     patchProfile: handleErrorAsync(async (req, res, next) => {
         const { name, photo, gender } = req.body;
         const data = { name, photo, gender };
+        const genderTypes = [ 'female', 'male', '' ];
         if (!name) {
             return appError("名稱必填", 400, next);
+        }
+        if (!genderTypes.includes(gender)) {
+            return appError("性別格式錯誤", 400, next);
         }
         await User.findByIdAndUpdate(req.user.id, data);
         const updateUser = await User.findById(req.user.id);
@@ -166,10 +170,9 @@ const users = {
                     select: 'name photo'
                 },
                 options: { sort: '-createdAt' }
-            })
-        console.log(user);
+            });
         successHandler(res, "取得成功", user.following);
-    }),
+    })
 }
 
 module.exports = users;
