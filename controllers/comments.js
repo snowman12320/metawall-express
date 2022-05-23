@@ -24,11 +24,7 @@ const comments = {
                 { $push: { likes: userId } }
             );
         }
-        const updateComment = await Comment.findById(id)
-            // .populate({ 
-            //     path: 'user',
-            //     select: 'name photo'
-            // });
+        const updateComment = await Comment.findById(id);
         successHandler(res, "更新成功", updateComment);
     })
 }

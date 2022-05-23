@@ -55,6 +55,7 @@ router.post('/login', (req, res, next) => {
                 data: {
                     token: 'eiguligulguihhg',
                     profile: {
+                        _id: '628a3f7bfd8374422f6af95e',
                         name: '王小明',
                         photo: ''
                     }
@@ -65,71 +66,11 @@ router.post('/login', (req, res, next) => {
     users.login(req, res, next);
 });
 
-// 取得登入者個人資訊
-router.get('/profile', checkAuth, (req, res, next) => {
-    /**
-     * #swagger.tags = ['Users']
-     * #swagger.description = '取得登入者個人資訊'
-     * #swagger.parameters['Authorization'] = {
-            in: 'header',
-            type: 'string',
-            required: true,
-            description: 'Bearer token'
-        }
-     * #swagger.responses[200] = {
-            description: 'user 資訊',
-            schema: {
-                status: 'success',
-                message: '取得成功',
-                data: {
-                    _id: '79868070201',
-                    name: '王小明',
-                    photo: '',
-                    gender: 'male'
-                }
-            }
-        }
-     */
-    users.getOwnProfile(req, res, next);
-});
-
-// 透過 id 取得個人資訊
-router.get('/profile/:id', checkAuth, (req, res, next) => {
-    /**
-     * #swagger.tags = ['Users']
-     * #swagger.description = '查看其他用戶資訊'
-     * #swagger.parameters['Authorization'] = {
-            in: 'header',
-            type: 'string',
-            required: true,
-            description: 'Bearer token'
-        }
-     * #swagger.parameters['id'] = {
-            in: 'path',
-            type: 'string',
-            required: true,
-            description: '用戶id'
-        }
-     * #swagger.responses[200] = {
-            description: 'user 資訊',
-            schema: {
-                status: 'success',
-                message: '取得成功',
-                data: {
-                    name: '王小明',
-                    photo: ''
-                }
-            }
-        }
-     */
-    users.getProfileById(req, res, next);
-});
-
-// 編輯登入者個人資訊
+// 編輯自己的資訊
 router.patch('/profile', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Users']
-     * #swagger.description = '編輯登入者個人資訊'
+     * #swagger.description = '編輯自己的資訊'
      * #swagger.parameters['Authorization'] = {
             in: 'header',
             type: 'string',
@@ -144,11 +85,11 @@ router.patch('/profile', checkAuth, (req, res, next) => {
             schema: {
                 $name: '王小明',
                 photo: '',
-                gender: 'female'
+                gender: 'male'
             }
         }
      * #swagger.responses[200] = {
-            description: 'user 資訊',
+            description: '個人資訊',
             schema: {
                 status: 'success',
                 message: '更新成功',
@@ -156,7 +97,10 @@ router.patch('/profile', checkAuth, (req, res, next) => {
                     _id: '79868070201',
                     name: '王小明',
                     photo: '',
-                    gender: 'female'
+                    gender: 'male',
+                    followers: [],
+                    following: [],
+                    createdAt: '2022-05-22T13:49:47.540Z'
                 }
             }
         }
@@ -168,7 +112,7 @@ router.patch('/profile', checkAuth, (req, res, next) => {
 router.patch('/update_password', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Users']
-     * #swagger.description = '編輯登入者密碼'
+     * #swagger.description = '編輯密碼'
      * #swagger.parameters['Authorization'] = {
             in: 'header',
             type: 'string',
@@ -186,13 +130,14 @@ router.patch('/update_password', checkAuth, (req, res, next) => {
             }
         }
      * #swagger.responses[200] = {
-            description: 'user 資訊',
+            description: 'token 資訊',
             schema: {
                 status: 'success',
                 message: '更新成功',
                 data: {
                     token: 'eiguligulguihhg',
                     profile: {
+                        _id: '628a3f7bfd8374422f6af95e',
                         name: '王小明',
                         photo: ''
                     }
@@ -203,23 +148,194 @@ router.patch('/update_password', checkAuth, (req, res, next) => {
     users.updatePassword(req, res, next);
 });
 
+// 取得自己的資訊
+router.get('/profile', checkAuth, (req, res, next) => {
+    /**
+     * #swagger.tags = ['Users']
+     * #swagger.description = '取得自己的資訊'
+     * #swagger.parameters['Authorization'] = {
+            in: 'header',
+            type: 'string',
+            required: true,
+            description: 'Bearer token'
+        }
+     * #swagger.responses[200] = {
+            description: '個人資訊',
+            schema: {
+                status: 'success',
+                message: '取得成功',
+                data: {
+                    _id: '628a3f7bfd8374422f6af95e',
+                    name: '王小明',
+                    photo: '',
+                    gender: 'male',
+                    followers: [],
+                    following: [],
+                    createdAt: '2022-05-22T13:49:47.540Z'
+                }
+            }
+        }
+     */
+    users.getOwnProfile(req, res, next);
+});
+
+// 取得其他用戶資訊
+router.get('/profile/:id', checkAuth, (req, res, next) => {
+    /**
+     * #swagger.tags = ['Users']
+     * #swagger.description = '取得其他用戶資訊'
+     * #swagger.parameters['Authorization'] = {
+            in: 'header',
+            type: 'string',
+            required: true,
+            description: 'Bearer token'
+        }
+     * #swagger.parameters['id'] = {
+            in: 'path',
+            type: 'string',
+            required: true,
+            description: '用戶id'
+        }
+     * #swagger.responses[200] = {
+            description: '用戶資訊',
+            schema: {
+                status: 'success',
+                message: '取得成功',
+                data: {
+                    name: '漂亮阿姨',
+                    photo: '',
+                    followers: 10,
+                    isFollow: true
+                }
+            }
+        }
+     */
+    users.getProfileById(req, res, next);
+});
+
 // 取得所有按讚貼文
 router.get('/likes', checkAuth, (req, res, next) => {
+    /**
+     * #swagger.tags = ['Users']
+     * #swagger.description = '取得所有按讚貼文'
+     * #swagger.parameters['Authorization'] = {
+            in: 'header',
+            type: 'string',
+            required: true,
+            description: 'Bearer token'
+        }
+     * #swagger.responses[200] = {
+            description: '所有按讚貼文',
+            schema: {
+                status: 'success',
+                message: '取得成功',
+                data: {
+                    _id: '628a3f7bfd8374422f6af95e',
+                    user: {
+                        _id: '628a3f7bfd8374422f6af95e',
+                        name: '漂亮阿姨',
+                        photo: ''
+                    },
+                    content: '安安我是阿姨',
+                    image: '',
+                    likes: [
+                        '628a3f7bfd8374422f6af95e'
+                    ],
+                    comments: [],
+                    createdAt: '2022-05-22T13:49:47.540Z'
+                }
+            }
+        }
+     */
     users.getLikePosts(req, res, next);
 });
 
 // 新增追蹤用戶
 router.post('/:id/follow', checkAuth, (req, res, next) => {
+    /**
+     * #swagger.tags = ['Users']
+     * #swagger.description = '新增追蹤用戶'
+     * #swagger.parameters['Authorization'] = {
+            in: 'header',
+            type: 'string',
+            required: true,
+            description: 'Bearer token'
+        }
+     * #swagger.parameters['id'] = {
+            in: 'path',
+            type: 'string',
+            required: true,
+            description: '用戶id'
+        }
+     * #swagger.responses[200] = {
+            description: '追蹤用戶資訊',
+            schema: {
+                status: 'success',
+                message: '追蹤成功',
+                data: {}
+            }
+        }
+     */
     users.postFollow(req, res, next);
 });
 
 // 刪除追蹤用戶
 router.delete('/:id/follow', checkAuth, (req, res, next) => {
+    /**
+     * #swagger.tags = ['Users']
+     * #swagger.description = '刪除追蹤用戶'
+     * #swagger.parameters['Authorization'] = {
+            in: 'header',
+            type: 'string',
+            required: true,
+            description: 'Bearer token'
+        }
+     * #swagger.parameters['id'] = {
+            in: 'path',
+            type: 'string',
+            required: true,
+            description: '用戶id'
+        }
+     * #swagger.responses[200] = {
+            description: '刪除追蹤用戶資訊',
+            schema: {
+                status: 'success',
+                message: '取消追蹤成功',
+                data: {}
+            }
+        }
+     */
     users.deleteFollow(req, res, next);
 });
 
 // 取得所有追蹤用戶
 router.get('/following', checkAuth, (req, res, next) => {
+    /**
+     * #swagger.tags = ['Users']
+     * #swagger.description = '取得所有追蹤用戶'
+     * #swagger.parameters['Authorization'] = {
+            in: 'header',
+            type: 'string',
+            required: true,
+            description: 'Bearer token'
+        }
+     * #swagger.responses[200] = {
+            description: '追蹤用戶資訊',
+            schema: {
+                status: 'success',
+                message: '取得成功',
+                data: [{
+                    user: {
+                        _id: '628a383552ea6969a18f1eaf',
+                        name: '漂亮阿姨',
+                        photo: ''
+                    },
+                    _id: '628b98787b516c28c9c28ecf',
+                    createdAt: '2022-05-23T14:21:44.180Z'
+                }]
+            }
+        }
+     */
     users.getFollowing(req, res, next);
 });
 

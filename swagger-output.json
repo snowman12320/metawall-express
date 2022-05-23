@@ -188,6 +188,10 @@
                     "profile": {
                       "type": "object",
                       "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "628a3f7bfd8374422f6af95e"
+                        },
                         "name": {
                           "type": "string",
                           "example": "王小明"
@@ -210,68 +214,11 @@
       }
     },
     "/api/v1/users/profile": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "description": "取得登入者個人資訊",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "type": "string",
-            "required": true,
-            "description": "Bearer token"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "user 資訊",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "success"
-                },
-                "message": {
-                  "type": "string",
-                  "example": "取得成功"
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "_id": {
-                      "type": "string",
-                      "example": "79868070201"
-                    },
-                    "name": {
-                      "type": "string",
-                      "example": "王小明"
-                    },
-                    "photo": {
-                      "type": "string",
-                      "example": ""
-                    },
-                    "gender": {
-                      "type": "string",
-                      "example": "male"
-                    }
-                  }
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        }
-      },
       "patch": {
         "tags": [
           "Users"
         ],
-        "description": "編輯登入者個人資訊",
+        "description": "編輯自己的資訊",
         "parameters": [
           {
             "name": "Authorization",
@@ -299,7 +246,7 @@
                 },
                 "gender": {
                   "type": "string",
-                  "example": "female"
+                  "example": "male"
                 }
               },
               "required": [
@@ -310,7 +257,7 @@
         ],
         "responses": {
           "200": {
-            "description": "user 資訊",
+            "description": "個人資訊",
             "schema": {
               "type": "object",
               "properties": {
@@ -339,7 +286,19 @@
                     },
                     "gender": {
                       "type": "string",
-                      "example": "female"
+                      "example": "male"
+                    },
+                    "followers": {
+                      "type": "array",
+                      "items": {}
+                    },
+                    "following": {
+                      "type": "array",
+                      "items": {}
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2022-05-22T13:49:47.540Z"
                     }
                   }
                 }
@@ -350,22 +309,13 @@
             }
           }
         }
-      }
-    },
-    "/api/v1/users/profile/{name}": {
+      },
       "get": {
         "tags": [
           "Users"
         ],
-        "description": "查看其他用戶資訊",
+        "description": "取得自己的資訊",
         "parameters": [
-          {
-            "name": "name",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "用戶姓名"
-          },
           {
             "name": "Authorization",
             "in": "header",
@@ -376,7 +326,7 @@
         ],
         "responses": {
           "200": {
-            "description": "user 資訊",
+            "description": "個人資訊",
             "schema": {
               "type": "object",
               "properties": {
@@ -391,6 +341,10 @@
                 "data": {
                   "type": "object",
                   "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "628a3f7bfd8374422f6af95e"
+                    },
                     "name": {
                       "type": "string",
                       "example": "王小明"
@@ -398,6 +352,22 @@
                     "photo": {
                       "type": "string",
                       "example": ""
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": "male"
+                    },
+                    "followers": {
+                      "type": "array",
+                      "items": {}
+                    },
+                    "following": {
+                      "type": "array",
+                      "items": {}
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2022-05-22T13:49:47.540Z"
                     }
                   }
                 }
@@ -415,7 +385,7 @@
         "tags": [
           "Users"
         ],
-        "description": "編輯登入者密碼",
+        "description": "編輯密碼",
         "parameters": [
           {
             "name": "Authorization",
@@ -451,7 +421,7 @@
         ],
         "responses": {
           "200": {
-            "description": "user 資訊",
+            "description": "token 資訊",
             "schema": {
               "type": "object",
               "properties": {
@@ -473,6 +443,10 @@
                     "profile": {
                       "type": "object",
                       "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "628a3f7bfd8374422f6af95e"
+                        },
                         "name": {
                           "type": "string",
                           "example": "王小明"
@@ -481,6 +455,325 @@
                           "type": "string",
                           "example": ""
                         }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/profile/{id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "取得其他用戶資訊",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "用戶id"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Bearer token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "用戶資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "取得成功"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "漂亮阿姨"
+                    },
+                    "photo": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "followers": {
+                      "type": "number",
+                      "example": 10
+                    },
+                    "isFollow": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/likes": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "取得所有按讚貼文",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Bearer token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "所有按讚貼文",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "取得成功"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "628a3f7bfd8374422f6af95e"
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "628a3f7bfd8374422f6af95e"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "漂亮阿姨"
+                        },
+                        "photo": {
+                          "type": "string",
+                          "example": ""
+                        }
+                      }
+                    },
+                    "content": {
+                      "type": "string",
+                      "example": "安安我是阿姨"
+                    },
+                    "image": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "likes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "comments": {
+                      "type": "array",
+                      "items": {}
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2022-05-22T13:49:47.540Z"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/{id}/follow": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "新增追蹤用戶",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "用戶id"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Bearer token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "追蹤用戶資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "追蹤成功"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "description": "刪除追蹤用戶",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "用戶id"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Bearer token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "刪除追蹤用戶資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "取消追蹤成功"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/following": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "取得所有追蹤用戶",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Bearer token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "追蹤用戶資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "取得成功"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "user": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "628a383552ea6969a18f1eaf"
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "漂亮阿姨"
+                          },
+                          "photo": {
+                            "type": "string",
+                            "example": ""
+                          }
+                        }
+                      },
+                      "_id": {
+                        "type": "string",
+                        "example": "628b98787b516c28c9c28ecf"
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "2022-05-23T14:21:44.180Z"
                       }
                     }
                   }
@@ -542,29 +835,42 @@
                   "items": {
                     "type": "object",
                     "properties": {
-                      "name": {
+                      "_id": {
                         "type": "string",
-                        "example": "王小明"
+                        "example": "6276252a59d61d0687896756"
                       },
-                      "photo": {
-                        "type": "string",
-                        "example": "aaa.jpg"
+                      "user": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "628a3f7bfd8374422f6af95e"
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "王小明"
+                          },
+                          "photo": {
+                            "type": "string",
+                            "example": ""
+                          }
+                        }
                       },
                       "content": {
                         "type": "string",
-                        "example": "這是我的貼文內容"
+                        "example": "這是我的貼文歐"
                       },
                       "image": {
                         "type": "string",
                         "example": "bbb.jpg"
                       },
                       "likes": {
-                        "type": "number",
-                        "example": 20000
+                        "type": "array",
+                        "items": {}
                       },
-                      "_id": {
-                        "type": "string",
-                        "example": "6276252a59d61d0687896756"
+                      "comments": {
+                        "type": "array",
+                        "items": {}
                       },
                       "createdAt": {
                         "type": "string",
@@ -585,7 +891,7 @@
         "tags": [
           "Posts"
         ],
-        "description": "新增單一貼文",
+        "description": "新增單筆貼文",
         "parameters": [
           {
             "name": "Authorization",
@@ -603,25 +909,16 @@
             "schema": {
               "type": "object",
               "properties": {
-                "user": {
-                  "type": "string",
-                  "example": "626c14b5fdb48b9d205ef262"
-                },
                 "content": {
                   "type": "string",
-                  "example": "這是我的貼文內容"
+                  "example": "這是我的貼文歐"
                 },
                 "image": {
                   "type": "string",
                   "example": "bbb.jpg"
-                },
-                "likes": {
-                  "type": "number",
-                  "example": 300
                 }
               },
               "required": [
-                "user",
                 "content"
               ]
             }
@@ -644,33 +941,33 @@
                 "data": {
                   "type": "object",
                   "properties": {
-                    "name": {
+                    "user": {
                       "type": "string",
-                      "example": "王小明"
-                    },
-                    "photo": {
-                      "type": "string",
-                      "example": "aaa.jpg"
+                      "example": "628a3f7bfd8374422f6af95e"
                     },
                     "content": {
                       "type": "string",
-                      "example": "這是我的貼文內容"
+                      "example": "這是我的貼文歐"
                     },
                     "image": {
                       "type": "string",
                       "example": "bbb.jpg"
                     },
                     "likes": {
-                      "type": "number",
-                      "example": 20000
+                      "type": "array",
+                      "items": {}
+                    },
+                    "comments": {
+                      "type": "array",
+                      "items": {}
                     },
                     "_id": {
                       "type": "string",
-                      "example": "6276252a59d61d0687896756"
+                      "example": "628b8d05e2d52948f5bb8b81"
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2022-05-07T07:52:10.937Z"
+                      "example": "2022-05-23T13:32:53.653Z"
                     }
                   }
                 }
@@ -715,12 +1012,209 @@
         }
       }
     },
+    "/api/v1/posts/user/{userId}": {
+      "get": {
+        "tags": [
+          "Posts"
+        ],
+        "description": "取得特定用戶的貼文",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "user id"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Bearer token"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": "排序：desc/asc"
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": "關鍵字搜尋"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "貼文資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "取得成功"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "6276252a59d61d0687896756"
+                      },
+                      "user": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "628a3f7bfd8374422f6af95e"
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "王小明"
+                          },
+                          "photo": {
+                            "type": "string",
+                            "example": ""
+                          }
+                        }
+                      },
+                      "content": {
+                        "type": "string",
+                        "example": "這是我的貼文歐"
+                      },
+                      "image": {
+                        "type": "string",
+                        "example": "bbb.jpg"
+                      },
+                      "likes": {
+                        "type": "array",
+                        "items": {}
+                      },
+                      "comments": {
+                        "type": "array",
+                        "items": {}
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "2022-05-07T07:52:10.937Z"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/posts/{id}": {
+      "get": {
+        "tags": [
+          "Posts"
+        ],
+        "description": "取得單筆貼文",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "貼文 id"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Bearer token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "貼文資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "取得成功"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "6276252a59d61d0687896756"
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "628a3f7bfd8374422f6af95e"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "王小明"
+                        },
+                        "photo": {
+                          "type": "string",
+                          "example": ""
+                        }
+                      }
+                    },
+                    "content": {
+                      "type": "string",
+                      "example": "這是我的貼文歐"
+                    },
+                    "image": {
+                      "type": "string",
+                      "example": "bbb.jpg"
+                    },
+                    "likes": {
+                      "type": "array",
+                      "items": {}
+                    },
+                    "comments": {
+                      "type": "array",
+                      "items": {}
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2022-05-07T07:52:10.937Z"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
       "delete": {
         "tags": [
           "Posts"
         ],
-        "description": "刪除單一貼文",
+        "description": "刪除單筆貼文",
         "parameters": [
           {
             "name": "id",
@@ -760,7 +1254,7 @@
         "tags": [
           "Posts"
         ],
-        "description": "編輯單一貼文",
+        "description": "編輯單筆貼文",
         "parameters": [
           {
             "name": "id",
@@ -778,25 +1272,16 @@
             "schema": {
               "type": "object",
               "properties": {
-                "user": {
-                  "type": "string",
-                  "example": "626c14b5fdb48b9d205ef262"
-                },
                 "content": {
                   "type": "string",
-                  "example": "這是我的貼文內容"
+                  "example": "aloha"
                 },
                 "image": {
                   "type": "string",
                   "example": "bbb.jpg"
-                },
-                "likes": {
-                  "type": "number",
-                  "example": 300
                 }
               },
               "required": [
-                "user",
                 "content"
               ]
             }
@@ -819,33 +1304,365 @@
                 "data": {
                   "type": "object",
                   "properties": {
-                    "name": {
+                    "_id": {
                       "type": "string",
-                      "example": "王小明"
+                      "example": "628b8d05e2d52948f5bb8b81"
                     },
-                    "photo": {
-                      "type": "string",
-                      "example": "aaa.jpg"
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "628a3f7bfd8374422f6af95e"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "王小明"
+                        },
+                        "photo": {
+                          "type": "string",
+                          "example": ""
+                        }
+                      }
                     },
                     "content": {
                       "type": "string",
-                      "example": "這是我的貼文內容"
+                      "example": "aloha"
                     },
                     "image": {
                       "type": "string",
                       "example": "bbb.jpg"
                     },
                     "likes": {
-                      "type": "number",
-                      "example": 20000
+                      "type": "array",
+                      "items": {}
                     },
-                    "_id": {
-                      "type": "string",
-                      "example": "6276252a59d61d0687896756"
+                    "comments": {
+                      "type": "array",
+                      "items": {}
                     },
                     "createdAt": {
                       "type": "string",
-                      "example": "2022-05-07T07:52:10.937Z"
+                      "example": "2022-05-23T13:32:53.653Z"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/posts/{id}/likes": {
+      "patch": {
+        "tags": [
+          "Posts"
+        ],
+        "description": "貼文按讚/收回讚",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "貼文 id"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Bearer token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "貼文資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "更新成功"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "628b89e27bb3be30ae6e0656"
+                    },
+                    "user": {
+                      "type": "string",
+                      "example": "628a3f7bfd8374422f6af95e"
+                    },
+                    "content": {
+                      "type": "string",
+                      "example": "嗨你好"
+                    },
+                    "image": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "likes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "comments": {
+                      "type": "array",
+                      "items": {}
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2022-05-23T13:19:30.054Z"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/posts/{id}/comments": {
+      "post": {
+        "tags": [
+          "Posts"
+        ],
+        "description": "新增留言",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Bearer token"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "type": "object",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string",
+                  "example": "我來留言囉"
+                }
+              },
+              "required": [
+                "content"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "貼文資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "新增成功"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "628b89e27bb3be30ae6e0656"
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "628a3f7bfd8374422f6af95e"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "王小明"
+                        },
+                        "photo": {
+                          "type": "string",
+                          "example": ""
+                        }
+                      }
+                    },
+                    "content": {
+                      "type": "string",
+                      "example": "這是我的貼文歐"
+                    },
+                    "image": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "likes": {
+                      "type": "array",
+                      "items": {}
+                    },
+                    "comments": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "628b89fd7bb3be30ae6e065d"
+                          },
+                          "user": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "example": "628a3f7bfd8374422f6af95e"
+                              },
+                              "name": {
+                                "type": "string",
+                                "example": "漂亮阿姨"
+                              },
+                              "photo": {
+                                "type": "string",
+                                "example": ""
+                              }
+                            }
+                          },
+                          "post": {
+                            "type": "string",
+                            "example": "628b89e27bb3be30ae6e0656"
+                          },
+                          "content": {
+                            "type": "string",
+                            "example": "歐是歐"
+                          },
+                          "likes": {
+                            "type": "array",
+                            "items": {}
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2022-05-23T13:19:57.910Z"
+                          }
+                        }
+                      }
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2022-05-23T13:19:30.054Z"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/comments/{id}/likes": {
+      "patch": {
+        "tags": [
+          "Comments"
+        ],
+        "description": "留言按讚/收回讚",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "留言 id"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Bearer token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "留言資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "更新成功"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "628b89e27bb3be30ae6e0656"
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "628a383552ea6969a18f1eaf"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "王小明"
+                        },
+                        "photo": {
+                          "type": "string",
+                          "example": ""
+                        }
+                      }
+                    },
+                    "post": {
+                      "type": "string",
+                      "example": "628a386b52ea6969a18f1eb3"
+                    },
+                    "content": {
+                      "type": "string",
+                      "example": "我來留言囉"
+                    },
+                    "likes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2022-05-23T13:19:30.054Z"
                     }
                   }
                 }
