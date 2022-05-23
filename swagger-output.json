@@ -14,55 +14,6 @@
   "consumes": [],
   "produces": [],
   "paths": {
-    "/api/v1/files": {
-      "post": {
-        "tags": [
-          "Files"
-        ],
-        "description": "上傳單張圖片",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "type": "string",
-            "required": true,
-            "description": "Bearer token"
-          },
-          {
-            "name": "image",
-            "in": "formData",
-            "type": "file",
-            "required": true,
-            "description": "資料格式"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "圖片資訊",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "success"
-                },
-                "message": {
-                  "type": "string",
-                  "example": "上傳成功"
-                },
-                "data": {
-                  "type": "string",
-                  "example": "https://metawallstorage3.s3.ap-northeast-2.amazonaws.com/d4037168"
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/v1/users/register": {
       "post": {
         "tags": [
@@ -1665,6 +1616,104 @@
                       "example": "2022-05-23T13:19:30.054Z"
                     }
                   }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/files": {
+      "post": {
+        "tags": [
+          "Files"
+        ],
+        "description": "上傳單張圖片",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Bearer token"
+          },
+          {
+            "name": "image",
+            "in": "formData",
+            "type": "file",
+            "required": true,
+            "description": "資料格式"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "圖片資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "上傳成功"
+                },
+                "data": {
+                  "type": "string",
+                  "example": "https://metawallstorage3.s3.ap-northeast-2.amazonaws.com/d4037168"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/imgur-files": {
+      "post": {
+        "tags": [
+          "imgurFiles"
+        ],
+        "description": "上傳單張圖片",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Bearer token"
+          },
+          {
+            "name": "image",
+            "in": "formData",
+            "type": "file",
+            "required": true,
+            "description": "資料格式"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "圖片資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "上傳成功"
+                },
+                "data": {
+                  "type": "string",
+                  "example": "https://i.imgur.com/t3ToMsx.jpg"
                 }
               },
               "xml": {
