@@ -36,10 +36,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api/v1/users', usersRouter);
-app.use('/api/v1/posts', postsRouter);
-app.use('/api/v1/comments', commentsRouter);
-app.use('/api/v1/files', filesRouter);
+app.use('/api/v1', filesRouter);
+app.use('/api/v1', usersRouter);
+app.use('/api/v1', postsRouter);
+app.use('/api/v1', commentsRouter);
 app.use('/api/v1/imgur-files', imgurFilesRouter);
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
 // app.use(history());

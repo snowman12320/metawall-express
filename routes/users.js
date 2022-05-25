@@ -4,7 +4,7 @@ const users = require('../controllers/users');
 const { checkAuth, generateSendJWT } = require('../service/auth');
 
 // 註冊
-router.post('/register', (req, res, next) => {
+router.post('/user/register', (req, res, next) => {
     /**
      * #swagger.tags = ['Users']
      * #swagger.description = '註冊'
@@ -33,7 +33,7 @@ router.post('/register', (req, res, next) => {
 });
 
 // 登入
-router.post('/login', (req, res, next) => {
+router.post('/user/login', (req, res, next) => {
     /**
      * #swagger.tags = ['Users']
      * #swagger.description = '登入'
@@ -67,7 +67,7 @@ router.post('/login', (req, res, next) => {
 });
 
 // 編輯自己的資訊
-router.patch('/profile', checkAuth, (req, res, next) => {
+router.patch('/user/profile', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Users']
      * #swagger.description = '編輯自己的資訊'
@@ -109,7 +109,7 @@ router.patch('/profile', checkAuth, (req, res, next) => {
 });
 
 // 編輯密碼
-router.patch('/update_password', checkAuth, (req, res, next) => {
+router.patch('/user/update_password', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Users']
      * #swagger.description = '編輯密碼'
@@ -149,7 +149,7 @@ router.patch('/update_password', checkAuth, (req, res, next) => {
 });
 
 // 取得自己的資訊
-router.get('/profile', checkAuth, (req, res, next) => {
+router.get('/user/profile', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Users']
      * #swagger.description = '取得自己的資訊'
@@ -180,7 +180,7 @@ router.get('/profile', checkAuth, (req, res, next) => {
 });
 
 // 取得其他用戶資訊
-router.get('/profile/:id', checkAuth, (req, res, next) => {
+router.get('/user/profile/:id', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Users']
      * #swagger.description = '取得其他用戶資訊'
@@ -214,7 +214,7 @@ router.get('/profile/:id', checkAuth, (req, res, next) => {
 });
 
 // 取得所有按讚貼文
-router.get('/likes', checkAuth, (req, res, next) => {
+router.get('/user/likes', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Users']
      * #swagger.description = '取得所有按讚貼文'
@@ -251,7 +251,7 @@ router.get('/likes', checkAuth, (req, res, next) => {
 });
 
 // 新增追蹤用戶
-router.post('/:id/follow', checkAuth, (req, res, next) => {
+router.post('/user/:id/follow', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Users']
      * #swagger.description = '新增追蹤用戶'
@@ -280,7 +280,7 @@ router.post('/:id/follow', checkAuth, (req, res, next) => {
 });
 
 // 刪除追蹤用戶
-router.delete('/:id/follow', checkAuth, (req, res, next) => {
+router.delete('/user/:id/follow', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Users']
      * #swagger.description = '刪除追蹤用戶'
@@ -309,7 +309,7 @@ router.delete('/:id/follow', checkAuth, (req, res, next) => {
 });
 
 // 取得所有追蹤用戶
-router.get('/following', checkAuth, (req, res, next) => {
+router.get('/user/following', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Users']
      * #swagger.description = '取得所有追蹤用戶'

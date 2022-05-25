@@ -13,18 +13,20 @@ const comments = {
         if (!findComment) {
             return appError("更新失敗，查無此留言", 400, next);
         }
+        let updateComment;
         if (findComment.likes.includes(userId)) {
-            await Comment.findByIdAndUpdate( // 收回
+            updateComment = await Comment.findByIdAndUpdate( // 收回
                 id,
-                { $pull: { likes: userId } }
+                { $pull: { likes: userId } },
+                { returnDocument: 'after' }
             );
         } else {
-            await Comment.findByIdAndUpdate( // 新增
+            updateComment = await Comment.findByIdAndUpdate( // 新增
                 id,
-                { $push: { likes: userId } }
+                { $push: { likes: userId } },
+                { returnDocument: 'after' }
             );
         }
-        const updateComment = await Comment.findById(id);
         successHandler(res, "更新成功", updateComment);
     })
 }

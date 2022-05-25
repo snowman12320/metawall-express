@@ -23,14 +23,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{API_PATH}}/api/v1/users/register",
+							"raw": "{{API_PATH}}/api/v1/user/register",
 							"host": [
 								"{{API_PATH}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"users",
+								"user",
 								"register"
 							]
 						}
@@ -52,14 +52,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{API_PATH}}/api/v1/users/login",
+							"raw": "{{API_PATH}}/api/v1/user/login",
 							"host": [
 								"{{API_PATH}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"users",
+								"user",
 								"login"
 							]
 						}
@@ -83,7 +83,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"張阿丹\",\n    \"photo\": \"\",\n    \"gender\": \"\"\n}",
+							"raw": "{\n    \"name\": \"王小明\",\n    \"photo\": \"\",\n    \"gender\": \"\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -91,14 +91,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{API_PATH}}/api/v1/users/profile",
+							"raw": "{{API_PATH}}/api/v1/user/profile",
 							"host": [
 								"{{API_PATH}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"users",
+								"user",
 								"profile"
 							]
 						}
@@ -122,7 +122,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"password\": \"11111111\",\n    \"confirmPassword\": \"11111111\"\n}",
+							"raw": "{\n    \"password\": \"a1111111\",\n    \"confirmPassword\": \"a1111111\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -130,14 +130,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{API_PATH}}/api/v1/users/update_password",
+							"raw": "{{API_PATH}}/api/v1/user/update_password",
 							"host": [
 								"{{API_PATH}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"users",
+								"user",
 								"update_password"
 							]
 						}
@@ -160,14 +160,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{API_PATH}}/api/v1/users/profile",
+							"raw": "{{API_PATH}}/api/v1/user/profile",
 							"host": [
 								"{{API_PATH}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"users",
+								"user",
 								"profile"
 							]
 						}
@@ -190,14 +190,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{API_PATH}}/api/v1/users/profile/628a383552ea6969a18f1eaf",
+							"raw": "{{API_PATH}}/api/v1/user/profile/628a383552ea6969a18f1eaf",
 							"host": [
 								"{{API_PATH}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"users",
+								"user",
 								"profile",
 								"628a383552ea6969a18f1eaf"
 							]
@@ -221,14 +221,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{API_PATH}}/api/v1/users/likes",
+							"raw": "{{API_PATH}}/api/v1/user/likes",
 							"host": [
 								"{{API_PATH}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"users",
+								"user",
 								"likes"
 							]
 						}
@@ -260,14 +260,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{API_PATH}}/api/v1/users/628a383552ea6969a18f1eaf/follow",
+							"raw": "{{API_PATH}}/api/v1/user/628a383552ea6969a18f1eaf/follow",
 							"host": [
 								"{{API_PATH}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"users",
+								"user",
 								"628a383552ea6969a18f1eaf",
 								"follow"
 							]
@@ -300,14 +300,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{API_PATH}}/api/v1/users/628a383552ea6969a18f1eaf/follow",
+							"raw": "{{API_PATH}}/api/v1/user/628a383552ea6969a18f1eaf/follow",
 							"host": [
 								"{{API_PATH}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"users",
+								"user",
 								"628a383552ea6969a18f1eaf",
 								"follow"
 							]
@@ -331,14 +331,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{API_PATH}}/api/v1/users/following",
+							"raw": "{{API_PATH}}/api/v1/user/following",
 							"host": [
 								"{{API_PATH}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"users",
+								"user",
 								"following"
 							]
 						}
@@ -446,14 +446,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{API_PATH}}/api/v1/posts/628b89e27bb3be30ae6e0656",
+							"raw": "{{API_PATH}}/api/v1/post/628b89e27bb3be30ae6e0656",
 							"host": [
 								"{{API_PATH}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"posts",
+								"post",
 								"628b89e27bb3be30ae6e0656"
 							]
 						}
@@ -477,7 +477,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"content\": \"我的第二貼\",\n    \"image\": \"\"\n}",
+							"raw": "{\n    \"content\": \"我的第1貼\",\n    \"image\": \"\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -485,14 +485,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{API_PATH}}/api/v1/posts",
+							"raw": "{{API_PATH}}/api/v1/post",
 							"host": [
 								"{{API_PATH}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"posts"
+								"post"
 							]
 						}
 					},
@@ -501,6 +501,16 @@
 				{
 					"name": "刪除所有貼文",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"body": {
@@ -529,6 +539,16 @@
 				{
 					"name": "刪除單筆貼文",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"body": {
@@ -541,15 +561,15 @@
 							}
 						},
 						"url": {
-							"raw": "{{API_PATH}}/api/v1/posts/62808470a48dd61b3b46e0ff",
+							"raw": "{{API_PATH}}/api/v1/post/628e53cca3a1860c03f51e58",
 							"host": [
 								"{{API_PATH}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"posts",
-								"62808470a48dd61b3b46e0ff"
+								"post",
+								"628e53cca3a1860c03f51e58"
 							]
 						}
 					},
@@ -558,11 +578,21 @@
 				{
 					"name": "編輯單筆貼文",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PATCH",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"content\": \"haloa\",\n    \"image\": \"\"\n}",
+							"raw": "{\n    \"content\": \"aloha\",\n    \"image\": \"\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -570,15 +600,15 @@
 							}
 						},
 						"url": {
-							"raw": "{{API_PATH}}/api/v1/posts/628b8d05e2d52948f5bb8b81",
+							"raw": "{{API_PATH}}/api/v1/post/628e53cca3a1860c03f51e58",
 							"host": [
 								"{{API_PATH}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"posts",
-								"628b8d05e2d52948f5bb8b81"
+								"post",
+								"628e53cca3a1860c03f51e58"
 							]
 						}
 					},
@@ -609,14 +639,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{API_PATH}}/api/v1/posts/628b89e27bb3be30ae6e0656/likes",
+							"raw": "{{API_PATH}}/api/v1/post/628b89e27bb3be30ae6e0656/likes",
 							"host": [
 								"{{API_PATH}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"posts",
+								"post",
 								"628b89e27bb3be30ae6e0656",
 								"likes"
 							]
@@ -641,7 +671,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"content\": \"我來留言囉1\"\n}",
+							"raw": "{\n    \"content\": \"我來留言囉\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -649,16 +679,16 @@
 							}
 						},
 						"url": {
-							"raw": "{{API_PATH}}/api/v1/posts/628b89e27bb3be30ae6e0656/comments",
+							"raw": "{{API_PATH}}/api/v1/post/628b89e27bb3be30ae6e0656/comment",
 							"host": [
 								"{{API_PATH}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"posts",
+								"post",
 								"628b89e27bb3be30ae6e0656",
-								"comments"
+								"comment"
 							]
 						}
 					},
@@ -685,14 +715,14 @@
 						"method": "PATCH",
 						"header": [],
 						"url": {
-							"raw": "{{API_PATH}}/api/v1/comments/628a39609b62d2b6ba89a7b4/likes",
+							"raw": "{{API_PATH}}/api/v1/comment/628a39609b62d2b6ba89a7b4/likes",
 							"host": [
 								"{{API_PATH}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"comments",
+								"comment",
 								"628a39609b62d2b6ba89a7b4",
 								"likes"
 							]
@@ -731,14 +761,14 @@
 							]
 						},
 						"url": {
-							"raw": "{{API_PATH}}/api/v1/files",
+							"raw": "{{API_PATH}}/api/v1/file",
 							"host": [
 								"{{API_PATH}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"files"
+								"file"
 							]
 						}
 					},
@@ -765,19 +795,19 @@
 								{
 									"key": "image",
 									"type": "file",
-									"src": []
+									"src": "/Users/clairechang/Desktop/測試用圖片/dragon.jpg"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{API_PATH}}/api/v1/imgur-files",
+							"raw": "{{API_PATH}}/api/v1/imgur-file",
 							"host": [
 								"{{API_PATH}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"imgur-files"
+								"imgur-file"
 							]
 						}
 					},

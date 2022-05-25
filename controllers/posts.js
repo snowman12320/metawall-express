@@ -84,33 +84,33 @@ const posts = {
     deleteSingleData: handleErrorAsync (async (req, res, next) => {
         const id = req.params.id;
         checkObjectId(id, next);
-        const deletePost = await Post.findByIdAndDelete(id);
-        if (!deletePost) { // 查無此筆(deletePost=null，跳false訊息)
-            return appError("刪除失敗，查無此id", 400, next);
-        } else {
-            successHandler(res, "刪除成功");
+        const findPost = await Post.findById(id);
+        if (!findPost) {
+            return appError("刪除失敗，查無此貼文", 400, next);
         }
+        if (findPost.user.toString() !== req.user.id) {
+            return appError("您沒有刪除此貼文權限", 401, next);
+        }
+        await Post.findByIdAndDelete(id);
+        successHandler(res, "刪除成功");
     }),
     patchData: handleErrorAsync (async (req, res, next) => {
         const id = req.params.id;
         const { content, image } = req.body;
         const data = { content, image };
+        checkObjectId(id, next);
+        const findPost = await Post.findById(id);
+        if (!findPost) {
+            return appError("更新失敗，查無此貼文", 400, next);
+        }
         if (!data.content) {
             return appError("更新失敗，貼文內容必填", 400, next);
-        } else {
-            checkObjectId(id, next);
-            const editPost = await Post.findByIdAndUpdate(id, data);
-            if (!editPost) { // 查無此筆(editPost=null，跳false訊息)
-                return appError("更新失敗，查無此id或欄位格式錯誤", 400, next);
-            } else {
-                const post = await Post.findById(id)
-                    .populate({ 
-                        path: 'user',
-                        select: 'name photo'
-                    });
-                successHandler(res, "更新成功", post);
-            }
         }
+        if (findPost.user.toString() !== req.user.id) {
+            return appError("您沒有編輯此貼文權限", 401, next);
+        }
+        const editPost = await Post.findByIdAndUpdate(id, data, { returnDocument: 'after' });
+        successHandler(res, "更新成功", editPost);
     }),
     patchLike: handleErrorAsync (async (req, res, next) => {
         const userId = req.user.id; // 登入者
@@ -120,18 +120,20 @@ const posts = {
         if (!findPost) {
             return appError("更新失敗，查無此貼文", 400, next);
         }
+        let updatePost;
         if (findPost.likes.includes(userId)) {
-            await Post.findByIdAndUpdate( // 收回
+            updatePost = await Post.findByIdAndUpdate( // 收回
                 postId,
-                { $pull: { likes: userId } }
+                { $pull: { likes: userId } },
+                { returnDocument: 'after' }
             );
         } else {
-            await Post.findByIdAndUpdate( // 新增
+            updatePost = await Post.findByIdAndUpdate( // 新增
                 postId,
-                { $push: { likes: userId } }
+                { $push: { likes: userId } },
+                { returnDocument: 'after' }
             );
         }
-        const updatePost = await Post.findById(postId);
         successHandler(res, "更新成功", updatePost);
     }),
     postComment: handleErrorAsync (async (req, res, next) => {
@@ -150,24 +152,24 @@ const posts = {
         }
         const data = { user, content, post };
         const message = await Comment.create(data);
-        await Post.findByIdAndUpdate(post, {
-            $push: { comments: [ message._id ] }
-        });
-        const getPost = await Post.findById(post)
-            .populate([
-                { 
-                    path: 'user', // post 內 user 欄位
-                    select: 'name photo' // 取出相關聯 collection name & photo
+        const getPost = await Post.findByIdAndUpdate(
+            post, 
+            { $push: { comments: [ message._id ] } },
+            { returnDocument: 'after' }
+        ).populate([
+            { 
+                path: 'user',
+                select: 'name photo'
+            },
+            { 
+                path: 'comments',
+                populate: { 
+                    path: 'user',
+                    select: 'name photo'
                 },
-                { 
-                    path: 'comments',
-                    populate: { 
-                        path: 'user',
-                        select: 'name photo'
-                    },
-                    options: { sort: '-createdAt' }
-                }
-            ]);
+                options: { sort: '-createdAt' }
+            }
+        ]);
         successHandler(res, "新增成功", getPost);
     })
 }
