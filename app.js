@@ -40,7 +40,7 @@ app.use('/api/v1', filesRouter);
 app.use('/api/v1', usersRouter);
 app.use('/api/v1', postsRouter);
 app.use('/api/v1', commentsRouter);
-app.use('/api/v1/imgur-files', imgurFilesRouter);
+app.use('/api/v1', imgurFilesRouter);
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
 // app.use(history());
 

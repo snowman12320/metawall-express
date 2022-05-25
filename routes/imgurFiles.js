@@ -3,7 +3,7 @@ const router = express.Router();
 const imgurFiles = require('../controllers/imgurFiles');
 const { checkAuth, generateSendJWT } = require('../service/auth');
 
-router.post('', checkAuth, (req, res, next) => {
+router.post('/imgur-file', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['imgurFiles']
      * #swagger.description = '上傳單張圖片'
