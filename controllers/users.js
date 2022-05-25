@@ -17,17 +17,28 @@ const users = {
             return appError('欄位未填寫完整', 400, next);
         }
         const errorMessageArr = [];
+        if (!validator.isLength(name, { min: 2 } )) {
+            errorMessageArr.push('暱稱至少 2 字元以上');
+        }
         if (password !== confirmPassword) {
             errorMessageArr.push('密碼不一致');
         }
-        if (!validator.isLength(password, { min: 8 })) {
-            errorMessageArr.push('密碼長度必須超過 8 碼');
+        if (!validator.isStrongPassword(password,
+            {
+                minLength: 8,
+                minLowercase: 1,
+                minUppercase: 0,
+                minNumbers: 1,
+                minSymbols: 0
+            }
+        )) {
+            errorMessageArr.push('密碼長度必須超過 8 碼，並英數混合');
         }
         if (!validator.isEmail(email)) {
             errorMessageArr.push('email 格式不正確');
         }
         if (errorMessageArr.length > 0) {
-            const errorMessage = errorMessageArr.join(', ');
+            const errorMessage = errorMessageArr.join('、');
             return appError(errorMessage, 400, next);
         }
 
@@ -81,8 +92,16 @@ const users = {
         if (password !== confirmPassword) {
             errorMessageArr.push('密碼不一致');
         }
-        if (!validator.isLength(password, { min: 8 })) {
-            errorMessageArr.push('密碼長度必須超過 8 碼');
+        if (!validator.isStrongPassword(password,
+            {
+                minLength: 8,
+                minLowercase: 1,
+                minUppercase: 0,
+                minNumbers: 1,
+                minSymbols: 0
+            }
+        )) {
+            errorMessageArr.push('密碼長度必須超過 8 碼，並英數混合');
         }
         if (errorMessageArr.length > 0) {
             const errorMessage = errorMessageArr.join(', ');
@@ -91,21 +110,19 @@ const users = {
         newPassword = await bcrypt.hash(password, 12); // 密碼加密
         const updateUser = await User.findByIdAndUpdate(req.user.id, {
             password: newPassword
-        });
+        }, { returnDocument: 'after' });
         generateSendJWT(res, "更新成功", updateUser); // 產生新 token
     }),
     patchProfile: handleErrorAsync(async (req, res, next) => {
         const { name, photo, gender } = req.body;
         const data = { name, photo, gender };
-        const genderTypes = [ 'female', 'male', '' ];
         if (!name) {
             return appError("名稱必填", 400, next);
         }
-        if (!genderTypes.includes(gender)) {
-            return appError("性別格式錯誤", 400, next);
-        }
-        await User.findByIdAndUpdate(req.user.id, data);
-        const updateUser = await User.findById(req.user.id);
+        const updateUser = await User.findByIdAndUpdate(req.user.id, data, {
+            returnDocument: 'after',
+            runValidators: true
+        });
         successHandler(res, "更新成功", updateUser);
     }),
     getLikePosts: handleErrorAsync (async (req, res, next) => {

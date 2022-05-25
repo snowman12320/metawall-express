@@ -16,7 +16,10 @@ const userSchema = new mongoose.Schema(
         photo: String,
         gender: {
             type: String,
-            enum: [ 'female', 'male', '' ] // 允許使用的字串集合
+            enum: { // 允許使用的字串集合
+                values: [ 'female', 'male', '' ],
+                message: '性別格式不正確'
+            }
         },
         password: {
             type: String,

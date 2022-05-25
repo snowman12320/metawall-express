@@ -5,7 +5,7 @@ const comments = require('../controllers/comments');
 const { checkAuth, generateSendJWT } = require('../service/auth');
 
 // 留言按讚/收回讚
-router.patch('/:id/likes', checkAuth, (req, res, next) => {
+router.patch('/comment/:id/likes', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Comments']
      * #swagger.description = '留言按讚/收回讚'
