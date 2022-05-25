@@ -14,7 +14,7 @@
   "consumes": [],
   "produces": [],
   "paths": {
-    "/api/v1/files": {
+    "/api/v1/file": {
       "post": {
         "tags": [
           "Files"
@@ -63,7 +63,7 @@
         }
       }
     },
-    "/api/v1/users/register": {
+    "/api/v1/user/register": {
       "post": {
         "tags": [
           "Users"
@@ -132,7 +132,7 @@
         }
       }
     },
-    "/api/v1/users/login": {
+    "/api/v1/user/login": {
       "post": {
         "tags": [
           "Users"
@@ -213,7 +213,7 @@
         }
       }
     },
-    "/api/v1/users/profile": {
+    "/api/v1/user/profile": {
       "patch": {
         "tags": [
           "Users"
@@ -380,7 +380,7 @@
         }
       }
     },
-    "/api/v1/users/update_password": {
+    "/api/v1/user/update_password": {
       "patch": {
         "tags": [
           "Users"
@@ -468,7 +468,7 @@
         }
       }
     },
-    "/api/v1/users/profile/{id}": {
+    "/api/v1/user/profile/{id}": {
       "get": {
         "tags": [
           "Users"
@@ -534,7 +534,7 @@
         }
       }
     },
-    "/api/v1/users/likes": {
+    "/api/v1/user/likes": {
       "get": {
         "tags": [
           "Users"
@@ -620,7 +620,7 @@
         }
       }
     },
-    "/api/v1/users/{id}/follow": {
+    "/api/v1/user/{id}/follow": {
       "post": {
         "tags": [
           "Users"
@@ -716,7 +716,7 @@
         }
       }
     },
-    "/api/v1/users/following": {
+    "/api/v1/user/following": {
       "get": {
         "tags": [
           "Users"
@@ -887,11 +887,11 @@
           }
         }
       },
-      "post": {
+      "delete": {
         "tags": [
           "Posts"
         ],
-        "description": "新增單筆貼文",
+        "description": "刪除全部貼文",
         "parameters": [
           {
             "name": "Authorization",
@@ -899,92 +899,8 @@
             "type": "string",
             "required": true,
             "description": "Bearer token"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "type": "object",
-            "required": true,
-            "description": "資料格式",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "content": {
-                  "type": "string",
-                  "example": "這是我的貼文歐"
-                },
-                "image": {
-                  "type": "string",
-                  "example": "bbb.jpg"
-                }
-              },
-              "required": [
-                "content"
-              ]
-            }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "貼文資訊",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "success"
-                },
-                "message": {
-                  "type": "string",
-                  "example": "取得成功"
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "user": {
-                      "type": "string",
-                      "example": "628a3f7bfd8374422f6af95e"
-                    },
-                    "content": {
-                      "type": "string",
-                      "example": "這是我的貼文歐"
-                    },
-                    "image": {
-                      "type": "string",
-                      "example": "bbb.jpg"
-                    },
-                    "likes": {
-                      "type": "array",
-                      "items": {}
-                    },
-                    "comments": {
-                      "type": "array",
-                      "items": {}
-                    },
-                    "_id": {
-                      "type": "string",
-                      "example": "628b8d05e2d52948f5bb8b81"
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "example": "2022-05-23T13:32:53.653Z"
-                    }
-                  }
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Posts"
-        ],
-        "description": "刪除全部貼文",
-        "parameters": [],
         "responses": {
           "200": {
             "schema": {
@@ -1120,7 +1036,7 @@
         }
       }
     },
-    "/api/v1/posts/{id}": {
+    "/api/v1/post/{id}": {
       "get": {
         "tags": [
           "Posts"
@@ -1222,6 +1138,13 @@
             "required": true,
             "type": "string",
             "description": "貼文 id"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Bearer token"
           }
         ],
         "responses": {
@@ -1262,6 +1185,13 @@
             "required": true,
             "type": "string",
             "description": "貼文 id"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Bearer token"
           },
           {
             "name": "body",
@@ -1356,7 +1286,101 @@
         }
       }
     },
-    "/api/v1/posts/{id}/likes": {
+    "/api/v1/post": {
+      "post": {
+        "tags": [
+          "Posts"
+        ],
+        "description": "新增單筆貼文",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Bearer token"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "type": "object",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string",
+                  "example": "這是我的貼文歐"
+                },
+                "image": {
+                  "type": "string",
+                  "example": "bbb.jpg"
+                }
+              },
+              "required": [
+                "content"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "貼文資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "取得成功"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "type": "string",
+                      "example": "628a3f7bfd8374422f6af95e"
+                    },
+                    "content": {
+                      "type": "string",
+                      "example": "這是我的貼文歐"
+                    },
+                    "image": {
+                      "type": "string",
+                      "example": "bbb.jpg"
+                    },
+                    "likes": {
+                      "type": "array",
+                      "items": {}
+                    },
+                    "comments": {
+                      "type": "array",
+                      "items": {}
+                    },
+                    "_id": {
+                      "type": "string",
+                      "example": "628b8d05e2d52948f5bb8b81"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2022-05-23T13:32:53.653Z"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/post/{id}/likes": {
       "patch": {
         "tags": [
           "Posts"
@@ -1436,7 +1460,7 @@
         }
       }
     },
-    "/api/v1/posts/{id}/comments": {
+    "/api/v1/post/{id}/comment": {
       "post": {
         "tags": [
           "Posts"
@@ -1586,7 +1610,7 @@
         }
       }
     },
-    "/api/v1/comments/{id}/likes": {
+    "/api/v1/comment/{id}/likes": {
       "patch": {
         "tags": [
           "Comments"

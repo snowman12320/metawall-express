@@ -3,7 +3,7 @@ const router = express.Router();
 const files = require('../controllers/files');
 const { checkAuth, generateSendJWT } = require('../service/auth');
 
-router.post('', checkAuth, (req, res, next) => {
+router.post('/file', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Files']
      * #swagger.description = '上傳單張圖片'

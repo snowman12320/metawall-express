@@ -15,10 +15,11 @@ const checkAuth = handleErrorAsync (async (req, res, next) => {
         return appError('驗證失敗，請重新登入', 401, next);
     }
     // 解密，還原物件
-    const decode = await new Promise((resolve, reject) => {
-        jwt.verify(token, process.env.JWT_SECRET, (error, payload) => {
-            error ? reject(error) : resolve(payload);
-        });
+    const decode = jwt.verify(token, process.env.JWT_SECRET, (error, payload) => {
+        if (error) {
+            return appError('驗證失敗，請重新登入', 401, next);
+        }
+        return payload;
     });
     const currentUser = await User.findById(decode.id);
     req.user = currentUser;

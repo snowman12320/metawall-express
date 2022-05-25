@@ -4,7 +4,7 @@ const posts = require('../controllers/posts');
 const { checkAuth, generateSendJWT } = require('../service/auth');
 
 // 取得所有貼文
-router.get('', checkAuth, (req, res, next) => {
+router.get('/posts', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Posts']
      * #swagger.description = '取得全部貼文'
@@ -51,7 +51,7 @@ router.get('', checkAuth, (req, res, next) => {
 });
 
 // 取得特定用戶的貼文
-router.get('/user/:userId', checkAuth, (req, res, next) => {
+router.get('/posts/user/:userId', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Posts']
      * #swagger.description = '取得特定用戶的貼文'
@@ -104,7 +104,7 @@ router.get('/user/:userId', checkAuth, (req, res, next) => {
 });
 
 // 取得單筆貼文
-router.get('/:id', checkAuth, (req, res, next) => {
+router.get('/post/:id', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Posts']
      * #swagger.description = '取得單筆貼文'
@@ -145,7 +145,7 @@ router.get('/:id', checkAuth, (req, res, next) => {
 });
 
 // 新增貼文
-router.post('', checkAuth, (req, res, next) => {
+router.post('/post', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Posts']
      * #swagger.description = '新增單筆貼文'
@@ -186,10 +186,16 @@ router.post('', checkAuth, (req, res, next) => {
 });
 
 // 刪除所有貼文
-router.delete('', (req, res, next) => {
+router.delete('/posts', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Posts']
      * #swagger.description = '刪除全部貼文'
+     * #swagger.parameters['Authorization'] = {
+            in: 'header',
+            type: 'string',
+            required: true,
+            description: 'Bearer token'
+        }
      * #swagger.responses[200] = {
             schema: {
                 status: 'success',
@@ -202,10 +208,16 @@ router.delete('', (req, res, next) => {
 });
 
 // 刪除單筆貼文
-router.delete('/:id', (req, res, next) => {
+router.delete('/post/:id', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Posts']
      * #swagger.description = '刪除單筆貼文'
+     * #swagger.parameters['Authorization'] = {
+            in: 'header',
+            type: 'string',
+            required: true,
+            description: 'Bearer token'
+        }
      * #swagger.parameters['id'] = {
             in: 'path',
             type: 'string',
@@ -224,10 +236,16 @@ router.delete('/:id', (req, res, next) => {
 });
 
 // 編輯單筆貼文
-router.patch('/:id', (req, res, next) => {
+router.patch('/post/:id', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Posts']
      * #swagger.description = '編輯單筆貼文'
+     * #swagger.parameters['Authorization'] = {
+            in: 'header',
+            type: 'string',
+            required: true,
+            description: 'Bearer token'
+        }
      * #swagger.parameters['id'] = {
             in: 'path',
             type: 'string',
@@ -269,7 +287,7 @@ router.patch('/:id', (req, res, next) => {
 });
 
 // 貼文按讚/收回讚
-router.patch('/:id/likes', checkAuth, (req, res, next) => {
+router.patch('/post/:id/likes', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Posts']
      * #swagger.description = '貼文按讚/收回讚'
@@ -308,7 +326,7 @@ router.patch('/:id/likes', checkAuth, (req, res, next) => {
 });
 
 // 新增留言
-router.post('/:id/comments', checkAuth, (req, res, next) => {
+router.post('/post/:id/comment', checkAuth, (req, res, next) => {
     /**
      * #swagger.tags = ['Posts']
      * #swagger.description = '新增留言'
