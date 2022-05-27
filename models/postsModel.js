@@ -21,12 +21,6 @@ const postSchema = new mongoose.Schema(
                 ref: 'User'
             }
         ],
-        comments: [
-            {
-                type: mongoose.Schema.ObjectId,
-                ref: 'Comment'
-            }
-        ],
         createdAt: {
             type: Date,
             default: Date.now, // 即時更新
@@ -36,7 +30,14 @@ const postSchema = new mongoose.Schema(
     {
         versionKey: false
     }
-)
+);
+
+postSchema.virtual('comments', {
+    ref: 'Comment',
+    foreignField: 'post', // commentSchema 內 post 欄位
+    localField: '_id' // postSchema id
+});
+
 const Post = mongoose.model('Post', postSchema);
 
 module.exports = Post;
