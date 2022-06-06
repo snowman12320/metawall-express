@@ -7,10 +7,11 @@ const { errorHandler } = require('./service/handler');
 const dotenv = require('dotenv');
 const swaggerUI = require('swagger-ui-express');
 const swaggerFile = require('./swagger-output.json');
-const filesRouter = require('./routes/files');
 const postsRouter = require('./routes/posts');
-const commentsRouter = require('./routes/comments');
 const usersRouter = require('./routes/users');
+const commentsRouter = require('./routes/comments');
+const filesRouter = require('./routes/files');
+const imgurFilesRouter = require('./routes/imgurFiles');
 const app = express();
 // const history = require('connect-history-api-fallback');
 
@@ -39,6 +40,7 @@ app.use('/api/v1', filesRouter);
 app.use('/api/v1', usersRouter);
 app.use('/api/v1', postsRouter);
 app.use('/api/v1', commentsRouter);
+app.use('/api/v1', imgurFilesRouter);
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
 // app.use(history());
 

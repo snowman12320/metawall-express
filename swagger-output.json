@@ -1698,6 +1698,55 @@
           }
         }
       }
+    },
+    "/api/v1/imgur-file": {
+      "post": {
+        "tags": [
+          "imgurFiles"
+        ],
+        "description": "上傳單張圖片",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Bearer token"
+          },
+          {
+            "name": "image",
+            "in": "formData",
+            "type": "file",
+            "required": true,
+            "description": "資料格式"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "圖片資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "上傳成功"
+                },
+                "data": {
+                  "type": "string",
+                  "example": "https://i.imgur.com/t3ToMsx.jpg"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {}
