@@ -28,7 +28,9 @@ const postSchema = new mongoose.Schema(
         }
     },
     {
-        versionKey: false
+        versionKey: false,
+        toJSON: { virtuals: true },
+        toObject: { virtuals: true }
     }
 );
 
