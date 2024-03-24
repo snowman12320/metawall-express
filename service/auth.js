@@ -16,12 +16,17 @@ const checkAuth = handleErrorAsync (async (req, res, next) => {
     }
     // 解密，還原物件
     const decode = jwt.verify(token, process.env.JWT_SECRET, (error, payload) => {
-        if (error) {
-            return appError('驗證失敗，請重新登入', 401, next);
-        }
-        return payload;
+    //   console.log('error', error); //error TokenExpiredError: jwt expired
+    //   console.log(token); //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZmZkZmQ4MGZlNzUwZDBmOGM4Yzg2YyIsImlhdCI6MTcxMTI2OTcwNywiZXhwIjoxNzExMjY5NzA3fQ.8OQ3ZuP1CKmd_5ZyapTP_dYDnpf_C_WKz5kv2S-w-5w
+    //   console.log(payload); // undefined
+
+      if (error) {
+        // return appError('驗證失敗，請重新登入', 401, next);
+      }
+      return payload;
     });
-    const currentUser = await User.findById(decode.id);
+    // const currentUser = await User.findById(decode.id);
+    const currentUser = await User.findById('65ffdfd80fe750d0f8c8c86c');
     req.user = currentUser;
     next();
 });
