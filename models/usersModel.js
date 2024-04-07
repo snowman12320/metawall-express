@@ -27,6 +27,7 @@ const userSchema = new mongoose.Schema(
             minlength: 8,
             select: false
         },
+        //* 關注我的人，即我的粉絲
         followers: [
             {
                 user: {
@@ -39,6 +40,7 @@ const userSchema = new mongoose.Schema(
                 }
             }
         ],
+        //* 追蹤中的人，即我追蹤的人
         following: [
             {
                 user: {
@@ -51,11 +53,13 @@ const userSchema = new mongoose.Schema(
                 }
             }
         ],
+        //* 建立時間
         createdAt: {
             type: Date,
             default: Date.now, // 即時更新
         }
     },
+    //* 不顯示版本號
     {
         versionKey: false
     }

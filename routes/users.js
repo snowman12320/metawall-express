@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const users = require('../controllers/users');
-const { checkAuth, generateSendJWT } = require('../service/auth');
+const { checkAuth } = require('../service/auth');
 
 // 註冊
-router.post('/user/register', (req, res, next) => {
-    /**
+router.post(
+  '/user/register',
+  /**
      * #swagger.tags = ['Users']
      * #swagger.description = '註冊'
      * #swagger.parameters['body'] = {
@@ -15,9 +16,9 @@ router.post('/user/register', (req, res, next) => {
             description: '資料格式',
             schema: {
                 $name: '王小明',
-                $email: '123@gmail.com',
-                $password: '12345678',
-                $confirmPassword: '12345678'
+                $email: '1234@gmail.com',
+                $password: 'a12345678',
+                $confirmPassword: 'a12345678'
             }
         }
      * #swagger.responses[200] = {
@@ -29,12 +30,12 @@ router.post('/user/register', (req, res, next) => {
             }
         }
      */
-    users.register(req, res, next);
-});
+  users.register
+);
 
 // 登入
 router.post('/user/login', (req, res, next) => {
-    /**
+  /**
      * #swagger.tags = ['Users']
      * #swagger.description = '登入'
      * #swagger.parameters['body'] = {
@@ -43,8 +44,8 @@ router.post('/user/login', (req, res, next) => {
             required: true,
             description: '資料格式',
             schema: {
-                $email: '123@gmail.com',
-                $password: '12345678'
+                $email: 'hi@gmail.com',
+                $password: 'a11111111'
             }
         }
      * #swagger.responses[200] = {
@@ -63,12 +64,12 @@ router.post('/user/login', (req, res, next) => {
             }
         }
      */
-    users.login(req, res, next);
+  users.login(req, res, next);
 });
 
 // 編輯自己的資訊
 router.patch('/user/profile', checkAuth, (req, res, next) => {
-    /**
+  /**
      * #swagger.tags = ['Users']
      * #swagger.description = '編輯自己的資訊'
      * #swagger.parameters['Authorization'] = {
@@ -105,12 +106,12 @@ router.patch('/user/profile', checkAuth, (req, res, next) => {
             }
         }
      */
-    users.patchProfile(req, res, next);
+  users.patchProfile(req, res, next);
 });
 
 // 編輯密碼
 router.patch('/user/update_password', checkAuth, (req, res, next) => {
-    /**
+  /**
      * #swagger.tags = ['Users']
      * #swagger.description = '編輯密碼'
      * #swagger.parameters['Authorization'] = {
@@ -145,20 +146,25 @@ router.patch('/user/update_password', checkAuth, (req, res, next) => {
             }
         }
      */
-    users.updatePassword(req, res, next);
+  users.updatePassword(req, res, next);
 });
 
 // 取得自己的資訊
-router.get('/user/profile', checkAuth, (req, res, next) => {
-    /**
+router.get(
+  '/user/profile',
+  checkAuth,
+  /**
      * #swagger.tags = ['Users']
      * #swagger.description = '取得自己的資訊'
      * #swagger.parameters['Authorization'] = {
             in: 'header',
             type: 'string',
             required: true,
-            description: 'Bearer token'
+            description: 'Bearer + {{token}}'
         }
+     * #swagger.security = [{
+            BearerAuth: []
+        }]
      * #swagger.responses[200] = {
             description: '個人資訊',
             schema: {
@@ -176,12 +182,12 @@ router.get('/user/profile', checkAuth, (req, res, next) => {
             }
         }
      */
-    users.getOwnProfile(req, res, next);
-});
+  users.getOwnProfile
+);
 
 // 取得其他用戶資訊
 router.get('/user/profile/:id', checkAuth, (req, res, next) => {
-    /**
+  /**
      * #swagger.tags = ['Users']
      * #swagger.description = '取得其他用戶資訊'
      * #swagger.parameters['Authorization'] = {
@@ -210,12 +216,12 @@ router.get('/user/profile/:id', checkAuth, (req, res, next) => {
             }
         }
      */
-    users.getProfileById(req, res, next);
+  users.getProfileById(req, res, next);
 });
 
 // 取得所有按讚貼文
 router.get('/user/likes', checkAuth, (req, res, next) => {
-    /**
+  /**
      * #swagger.tags = ['Users']
      * #swagger.description = '取得所有按讚貼文'
      * #swagger.parameters['Authorization'] = {
@@ -247,12 +253,12 @@ router.get('/user/likes', checkAuth, (req, res, next) => {
             }
         }
      */
-    users.getLikePosts(req, res, next);
+  users.getLikePosts(req, res, next);
 });
 
 // 新增追蹤用戶
 router.post('/user/:id/follow', checkAuth, (req, res, next) => {
-    /**
+  /**
      * #swagger.tags = ['Users']
      * #swagger.description = '新增追蹤用戶'
      * #swagger.parameters['Authorization'] = {
@@ -276,12 +282,12 @@ router.post('/user/:id/follow', checkAuth, (req, res, next) => {
             }
         }
      */
-    users.postFollow(req, res, next);
+  users.postFollow(req, res, next);
 });
 
 // 刪除追蹤用戶
 router.delete('/user/:id/follow', checkAuth, (req, res, next) => {
-    /**
+  /**
      * #swagger.tags = ['Users']
      * #swagger.description = '刪除追蹤用戶'
      * #swagger.parameters['Authorization'] = {
@@ -305,12 +311,12 @@ router.delete('/user/:id/follow', checkAuth, (req, res, next) => {
             }
         }
      */
-    users.deleteFollow(req, res, next);
+  users.deleteFollow(req, res, next);
 });
 
 // 取得所有追蹤用戶
 router.get('/user/following', checkAuth, (req, res, next) => {
-    /**
+  /**
      * #swagger.tags = ['Users']
      * #swagger.description = '取得所有追蹤用戶'
      * #swagger.parameters['Authorization'] = {
@@ -336,7 +342,7 @@ router.get('/user/following', checkAuth, (req, res, next) => {
             }
         }
      */
-    users.getFollowing(req, res, next);
+  users.getFollowing(req, res, next);
 });
 
 module.exports = router;

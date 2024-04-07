@@ -1,19 +1,21 @@
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const cors = require('cors');
-const { errorHandler } = require('./service/handler');
-const dotenv = require('dotenv');
-const swaggerUI = require('swagger-ui-express');
+const express = require('express'); // express 框架
+const path = require('path'); // 
+const cookieParser = require('cookie-parser'); // cookie 解析
+const logger = require('morgan'); // log 紀錄
+const cors = require('cors'); // 跨域
+const dotenv = require('dotenv'); // 環境變數
+const swaggerUI = require('swagger-ui-express'); // swagger
+
 const swaggerFile = require('./swagger-output.json');
+const { errorHandler } = require('./service/handler');
 const postsRouter = require('./routes/posts');
 const usersRouter = require('./routes/users');
 const commentsRouter = require('./routes/comments');
 const filesRouter = require('./routes/files');
 const imgurFilesRouter = require('./routes/imgurFiles');
+
 const app = express();
-// const history = require('connect-history-api-fallback');
+// const history = require('connect-history-api-fallback'); // history 模式
 
 // 程式出現重大錯誤時
 process.on('uncaughtException', error => {
@@ -29,22 +31,23 @@ dotenv.config({path:'./.env'});
 require('./connections');
 
 // 載入設定檔
-app.use(cors());
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors()); // 跨域
+app.use(logger('dev')); // log 紀錄
+app.use(express.json()); // 解析 json 格式
+app.use(express.urlencoded({ extended: false })); // 解析 urlencoded 格式
+app.use(cookieParser());// cookie 解析
+app.use(express.static(path.join(__dirname, 'public'))); // 靜態檔案
 
+// 路由
 app.use('/api/v1', filesRouter);
 app.use('/api/v1', usersRouter);
 app.use('/api/v1', postsRouter);
 app.use('/api/v1', commentsRouter);
 app.use('/api/v1', imgurFilesRouter);
-app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
+app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile)); // http://localhost:3000/api-doc/
 // app.use(history());
 
-// 404
+// 404 錯誤
 app.use((req, res, next) => {
     errorHandler(res, '無此網站路由', 404, 'error');
 });
@@ -80,16 +83,17 @@ app.use((error, req, res, next) => {
     next(error);
 });
 
-// 自訂錯誤處理
+// 自訂錯誤處理，依照環境不同，回傳不同錯誤訊息
 app.use((error, req, res, next) => {
     // dev
     if (process.env.NODE_ENV === 'develop') {
         return resErrorDev(error, res);
     }
+    
     // prod
     if (error.name === 'ValidationError') {
         error.message = '資料欄位填寫錯誤，請重新輸入！';
-        error.isOperational = true;
+        error.isOperational = true; // 錯誤狀態是否預期的
         return resErrorProd(error, res);
     }
     resErrorProd(error, res);

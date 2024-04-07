@@ -4,7 +4,7 @@
     "title": "MetaWall API",
     "description": "MetaWall 生成文件"
   },
-  "host": "https://peaceful-citadel-43202.herokuapp.com",
+  "host": "localhost:3000",
   "basePath": "/",
   "tags": [],
   "schemes": [
@@ -85,15 +85,15 @@
                 },
                 "email": {
                   "type": "string",
-                  "example": "123@gmail.com"
+                  "example": "1234@gmail.com"
                 },
                 "password": {
                   "type": "string",
-                  "example": "12345678"
+                  "example": "a12345678"
                 },
                 "confirmPassword": {
                   "type": "string",
-                  "example": "12345678"
+                  "example": "a12345678"
                 }
               },
               "required": [
@@ -150,11 +150,11 @@
               "properties": {
                 "email": {
                   "type": "string",
-                  "example": "123@gmail.com"
+                  "example": "hi@gmail.com"
                 },
                 "password": {
                   "type": "string",
-                  "example": "12345678"
+                  "example": "a11111111"
                 }
               },
               "required": [
@@ -321,7 +321,7 @@
             "in": "header",
             "type": "string",
             "required": true,
-            "description": "Bearer token"
+            "description": "Bearer + {{token}}"
           }
         ],
         "responses": {
@@ -377,7 +377,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     },
     "/api/v1/user/update_password": {
@@ -1749,5 +1754,13 @@
       }
     }
   },
-  "definitions": {}
+  "definitions": {},
+  "securityOefinitions": {
+    "apiKeyAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "JWT Authorization"
+    }
+  }
 }
