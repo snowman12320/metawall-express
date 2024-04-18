@@ -27,39 +27,11 @@ const userSchema = new mongoose.Schema(
             minlength: 8,
             select: false
         },
-        //* 關注我的人，即我的粉絲
-        followers: [
-            {
-                user: {
-                    type: mongoose.Schema.ObjectId,
-                    ref: 'User', // 連接到 User collection
-                },
-                createdAt: {
-                    type: Date,
-                    default: Date.now, // 即時更新
-                }
-            }
-        ],
-        //* 追蹤中的人，即我追蹤的人
-        following: [
-            {
-                user: {
-                    type: mongoose.Schema.ObjectId,
-                    ref: 'User', // 連接到 User collection
-                },
-                createdAt: {
-                    type: Date,
-                    default: Date.now, // 即時更新
-                }
-            }
-        ],
-        //* 建立時間
         createdAt: {
             type: Date,
-            default: Date.now, // 即時更新
+            default: Date.now,
         }
     },
-    //* 不顯示版本號
     {
         versionKey: false
     }

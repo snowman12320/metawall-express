@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config({path: './config.env'});
 
-// 設定連線網址
 const DB = process.env.DATABASE.replace(
     '<password>',
     process.env.DATABASE_PASSWORD
@@ -10,5 +9,5 @@ const DB = process.env.DATABASE.replace(
 
 mongoose.connect(DB)
     .then(() => 
-        console.log("連線資料成功")
+        console.log("連線資料庫成功")
     );

@@ -1,23 +1,42 @@
 const swaggerAutogen = require('swagger-autogen')();
+// const User = require('./models/usersModel');
 
 const doc = {
   info: {
-    title: 'MetaWall API',
-    description: 'MetaWall 生成文件',
+    title: '104social',
+    description: 'A social networking website for connecting people.',
   },
-  host: 'localhost:3000', //"https://peaceful-citadel-43202.herokuapp.com", // 部屬時要要填部屬時的網址
+  host: 'localhost:3000',
   schemes: ['http', 'https'],
-  securityOefinitions: {
-    apiKeyAuth: {
+  securityDefinitions: {
+    Bearer: {
       type: 'apiKey',
       name: 'Authorization',
       in: 'header',
-      description: 'JWT Authorization',
+      description:
+        'Enter "Bearer+space+{token}"。Example: "Bearer eyXXX.XXX.XXX"',
+    },
+  },
+  security: [
+    {
+      Bearer: [],
+    },
+  ],
+  definitions: {
+    User: {
+      type: 'object',
+      properties: {},
     },
   },
 };
 
-const outputFile = './swagger-output.json'; // 生成路徑
-const endpointsFiles = ['./app.js']; // 讀取檔案
+// User schema fields
+// Object.keys(User.schema.paths).forEach((field) => {
+//   const type = User.schema.paths[field].instance.toLowerCase();
+//   doc.definitions.User.properties[field] = { type };
+// });
+
+const outputFile = './swagger-output.json'; 
+const endpointsFiles = ['./app.js']; 
 
 swaggerAutogen(outputFile, endpointsFiles, doc);
